@@ -11,12 +11,4 @@
     border-bottom: 1px solid #bcbcc4;
     background-color: transparent;
     margin-top: 40px;
-    font-size: 14px;
-}
-
-@media screen and (max-width: 600px) {
-    .popup_form-item {
-        font-size: 14px;
-        line-height: 17px;
-    }
 }
