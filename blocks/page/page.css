@@ -11,15 +11,8 @@
     justify-content: center;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #111111;
+    box-sizing: border-box;
 }
-
-
-/* @media screen and (max-width: 1024px) {
-    .page {
-        max-width: 1024px;
-    }
-} */
 
 @media screen and (max-width: 768px) {
     .page {

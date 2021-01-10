@@ -1,0 +1,5 @@
+.profile__name-edit {
+    display: inline-block;
+    max-width: 100%;
+    box-sizing: border-box;
+}

@@ -16,19 +16,92 @@
             </a>
         </header>
         <main class="content">
+
             <section class="profile">
-                <h1 class="lead__title">Путешествия по России</h1>
-                <p class="lead__subtitle">Настоящая страна не в выпусках новостей, а здесь.</p>
-                <img class="lead__image" src="images/lead-polka.jpg" alt="Карта пути" />
-                <p class="lead__caption">ваша полка — верхняя</p>
+                <img class="profile__avatar" src="./images/avatar.jpg" alt="аватар" />
+                <div class="profile__info">
+                    <div class="profile__name-edit">
+                        <h2 class="profile__name block">Жак-Ив Кусто</h2>
+                        <div class="profile__button-edit button"></div>
+                    </div>
+                    <p class="profile__description">Исследователь океана</p>
+                </div>
+                <div class="profile__button-add button"></div>
+            </section>
+
+            <section class="elements">
+                <article class="element">
+                    <img class="element__img" src="./images/kirill-pershin-1088404-unsplash.jpg" alt="аватар" />
+                    <div class="element__info">
+                        <h2 class="element__description block">Карачаевск</h2>
+                        <div class="element__button-like button"></div>
+                    </div>
+                </article>
+
+                <article class="element">
+                    <img class="element__img" src="./images/kirill-pershin-1404681-unsplash.jpg" alt="аватар" />
+                    <div style="background-image:/images/cards-competence.png"></div>
+                    <div class="element__info">
+                        <h2 class="element__description block">Гора Эльбрус</h2>
+                        <div class="element__button-like button"></div>
+                    </div>
+                </article>
+
+                <article class="element">
+                    <img class="element__img" src="./images/kirill-pershin-1556355-unsplash.jpg" alt="аватар" />
+                    <div class="element__info">
+                        <h2 class="element__description">Домбай</h2>
+                        <div class="element__button-like button"></div>
+                    </div>
+                </article>
+
+                <article class="element">
+                    <img class="element__img" src="./images/kirill-pershin-1404681-unsplash.jpg" alt="аватар" />
+                    <div class="element__info">
+                        <h2 class="element__description block">Гора Эльбрус</h2>
+                        <div class="element__button-like button"></div>
+                    </div>
+                </article>
+
+                <article class="element">
+                    <img class="element__img" src="./images/kirill-pershin-1556355-unsplash.jpg" alt="аватар" />
+                    <div class="element__info">
+                        <h2 class="element__description block">Домбай</h2>
+                        <div class="element__button-like button"></div>
+                    </div>
+                </article>
+
+                <article class="element">
+                    <img class="element__img" src="./images/kirill-pershin-1404681-unsplash.jpg" alt="аватар" />
+                    <div class="element__info">
+                        <h2 class="element__description block">Карачаево-Черкессия</h2>
+                        <div class="element__button-like button"></div>
+                    </div>
+                </article>
+
             </section>
         </main>
         <footer class="footer">
-
             &copy; 2020 Mesto Russia
-
         </footer>
+        <section class="popup">
+            <div class="popup__container">
+                <h2 class="popup__header">Редактировать профиль</h2>
+                <form class="popup__form">
+                    <fieldset class="popup__fieldset">
+                        <input type="text" class="popup_form-item popup__form-name" name="form_profile__name" placeholder="Жак-Ив Кусто" required>
+                        <input type="text" class="popup_form-item popup__form-description" name="form_profile__description" placeholder="Исследователь океана" required>
+                        <input type="submit" value="Сохранить" class="popup__form-button button">
+
+                    </fieldset>
+                    <span class="popup__button-close button"></span>
+                </form>
+            </div>
+
+        </section>
+
     </div>
+    <script src="./scripts/index.js"></script>
 </body>
 
 </html>

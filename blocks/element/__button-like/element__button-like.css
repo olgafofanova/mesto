@@ -1,0 +1,14 @@
+.element__button-like {
+    min-width: 22px;
+    height: 19px;
+    box-sizing: border-box;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(../../../images/button-like.svg);
+    margin: 5px 0 0;
+}
+
+.element__button-like:active {
+    background-image: url(../../../images/button-like-active.svg);
+    opacity: 1;
+}
