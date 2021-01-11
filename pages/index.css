@@ -22,7 +22,8 @@
 @import "../blocks/block/block.css";
 @import "../blocks/popup/popup.css";
 @import "../blocks/popup/__header/popup__header.css";
-@import "../blocks/popup/_form-item/popup_form-item.css";
+@import "../blocks/popup/_form-name/popup__form-name.css";
+@import "../blocks/popup/__form-description/popup__form-description.css";
 @import "../blocks/popup/__form-button/popup__form-button.css";
 @import "../blocks/popup/__fieldset/popup__form.css";
 @import "../blocks/popup/__container/popup__container.css";
