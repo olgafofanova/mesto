@@ -1,4 +1,4 @@
-@import "../styles/normalize.css";
+@import "../vendor/normalize.css";
 @import "../vendor/fonts/Inter Web/inter.css";
 @import "../blocks/body/body.css";
 @import "../blocks/page/page.css";
