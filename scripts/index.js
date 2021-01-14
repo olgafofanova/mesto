@@ -1,36 +1,50 @@
-let ButtonEdit = document.querySelector('.profile__button-edit');
+let buttonEdit = document.querySelector('.profile__button-edit');
 let popup = document.querySelector('.popup');
-let CloseButton = popup.querySelector('.popup__button-close');
+let closeButton = popup.querySelector('.popup__button-close');
 
-function togglePopup() {
-    popup.classList.toggle('popup_opened');
+// function togglePopup() {
+//     popup.classList.toggle('popup_opened');
+// }
+
+function addPopup() {
+  popup.classList.add('popup_opened');
+}
+
+function removePopup() {
+  popup.classList.remove('popup_opened');
 }
 
 function clickPopup(event) {
     if (event.target === event.currentTarget) {
-        togglePopup();
+      removePopup();
     }
 }
 
-ButtonEdit.addEventListener('click', togglePopup);
-CloseButton.addEventListener('click', togglePopup);
+buttonEdit.addEventListener('click', openEditPrifile);
+closeButton.addEventListener('click', removePopup);
 popup.addEventListener('click', clickPopup);
 
 let formElement = popup.querySelector('.popup__form');
+let nameInput = popup.querySelector('.popup__form-item_type_name');
+let jobInput = popup.querySelector('.popup__form-item_type_description');
+let profileName = document.querySelector('.profile__name');
+let profileDescription = document.querySelector('.profile__description');
+
+function openEditPrifile() {
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileDescription.textContent;
+
+  addPopup();
+}
+
 
 function handleFormSubmit(evt) {
     evt.preventDefault();
 
-    let nameInput = popup.querySelector('.popup__form-name');
-    let jobInput = popup.querySelector('.popup__form-description');
-
-    let profileName = document.querySelector('.profile__name');
-    let profileDescription = document.querySelector('.profile__description');
-
     profileName.textContent = nameInput.value;
     profileDescription.textContent = jobInput.value;
 
-    togglePopup();
+    removePopup();
 }
 
 formElement.addEventListener('submit', handleFormSubmit);

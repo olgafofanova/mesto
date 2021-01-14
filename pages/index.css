@@ -1,10 +1,11 @@
 @import "../vendor/normalize.css";
-@import "../vendor/fonts/Inter Web/inter.css";
+@import "../vendor/fonts/InterWeb/inter.css";
 @import "../blocks/body/body.css";
 @import "../blocks/page/page.css";
 @import "../blocks/header/header.css";
 @import "../blocks/header/__logo/header__logo.css";
 @import "../blocks/footer/footer.css";
+@import "../blocks/footer/__copy/footer__copy.css";
 @import "../blocks/profile/profile.css";
 @import "../blocks/profile/__avatar/profile__avatar.css";
 @import "../blocks/profile/__button-add/profile__button-add.css";
@@ -22,10 +23,9 @@
 @import "../blocks/block/block.css";
 @import "../blocks/popup/popup.css";
 @import "../blocks/popup/__header/popup__header.css";
-@import "../blocks/popup/_form-name/popup__form-name.css";
-@import "../blocks/popup/__form-description/popup__form-description.css";
+@import "../blocks/popup/__form-item/popup__form-item.css";
 @import "../blocks/popup/__form-button/popup__form-button.css";
-@import "../blocks/popup/__fieldset/popup__form.css";
+@import "../blocks/popup/__fieldset/popup__fieldset.css";
 @import "../blocks/popup/__container/popup__container.css";
 @import "../blocks/popup/__button-close/popup__button-close.css";
 @import "../blocks/popup/_opened/popup_opened.css";

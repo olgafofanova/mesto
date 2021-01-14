@@ -6,9 +6,15 @@
     background-repeat: no-repeat;
     background-image: url(../../../images/button-like.svg);
     margin: 5px 0 0;
+    border: none;
+    background-color: white;
+    outline: none;
 }
+
+
 
 .element__button-like:active {
     background-image: url(../../../images/button-like-active.svg);
-    opacity: 1;
+
 }
+

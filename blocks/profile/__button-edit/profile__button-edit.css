@@ -6,8 +6,10 @@
     background-position: center;
     background-repeat: no-repeat;
     background-image: url(../../../images/button-edit.svg);
+    background-color: black;
     margin: 13px 0 0 25px;
     float: left;
+    outline: none;
 }
 
 @media screen and (max-width: 768px) {
