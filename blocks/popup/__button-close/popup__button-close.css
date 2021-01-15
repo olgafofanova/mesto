@@ -9,7 +9,7 @@
     background-position: center;
     border: none;
     outline: none;
-    background-color: black;
+    background-color: transparent;
 }
 
 @media screen and (max-width: 600px) {

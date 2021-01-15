@@ -6,8 +6,7 @@
 }
 
 @media screen and (max-width: 600px) {
-  .popup__header {
-      font-size: 18px;
-      padding: 31px 0 0;
+  .popup__fieldset {
+      padding: 34px 0 0;
   }
 }
