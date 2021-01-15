@@ -19,7 +19,7 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 600px) {
   .popup__form-button {
     font-size: 14px;
     line-height: 17px;
