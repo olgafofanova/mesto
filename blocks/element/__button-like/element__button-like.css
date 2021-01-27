@@ -11,10 +11,7 @@
     outline: none;
 }
 
-
-
 .element__button-like:active {
     background-image: url(../../../images/button-like-active.svg);
-
 }
 
