@@ -35,13 +35,13 @@ closeButtons.forEach((button) => {
     button.addEventListener('click', hidePopup);
 });
 
-const popupAdd = document.querySelector('.popup__add'); // попап профиля - добавления картинок
+const popupAdd = document.querySelector('.popup_add'); // попап профиля - добавления картинок
 const formElementAdd = popupAdd.querySelector('.popup__form');
 formElementAdd.addEventListener('submit', handleFormAddSubmit);
 const nameInputAdd = popupAdd.querySelector('.popup__form-item_type_name');
 const jobInputAdd = popupAdd.querySelector('.popup__form-item_type_description');
 
-const popupProfile = document.querySelector('.popup__profile'); // попап профиля - добавления картинок
+const popupProfile = document.querySelector('.popup_profile'); // попап профиля - добавления картинок
 const formElementProfile = popupProfile.querySelector('.popup__form');
 formElementProfile.addEventListener('submit', handleFormProfileSubmit);
 const nameInputProfile = popupProfile.querySelector('.popup__form-item_type_name');
