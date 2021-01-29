@@ -37,17 +37,17 @@
         </main>
 
         <footer class="footer">
-          <p class="footer__copy">&copy; 2020 Mesto Russia</p>
+            <p class="footer__copy">&copy; 2020 Mesto Russia</p>
         </footer>
 
-        <section class="popup popup_type_profile-add">
+        <section class="popup popup_type_profile-add popup__add">
             <div class="popup__container">
-                <h2 class="popup__header">Редактировать профиль</h2>
+                <h2 class="popup__header">Новое место</h2>
                 <form class="popup__form" name="popup-form">
                     <fieldset class="popup__fieldset">
-                        <input type="text" class="popup__form-item popup__form-item_type_name" name="form-profile-name" placeholder="Имя" required>
-                        <input type="text" class="popup__form-item popup__form-item_type_description" name="form-profile-description" placeholder="О себе" required>
-                        <input type="submit" value="Сохранить" class="popup__form-button">
+                        <input type="text" class="popup__form-item popup__form-item_type_name" name="form-profile-name" placeholder="Название" required>
+                        <input type="text" class="popup__form-item popup__form-item_type_description" name="form-profile-description" placeholder="Ссылка на картинку" required>
+                        <input type="submit" value="Создать" class="popup__form-button">
                     </fieldset>
                     <button class="popup__button-close button" type="button">
                     </button>
@@ -55,16 +55,31 @@
             </div>
         </section>
 
-        <section class="popup popup_type_image">
-          <div class="popup__container-img">
-              <form class="popup__form" name="popupImage-form">
-                <img class="popup__img" src="./images/no_image.png" alt="Изображение" />
-                  <button class="popup__button-close button" type="button">
+        <section class="popup popup_type_profile-add popup__profile">
+            <div class="popup__container">
+                <h2 class="popup__header">Редактировать профиль</h2>
+                <form class="popup__form" name="popup-form">
+                    <fieldset class="popup__fieldset">
+                        <input type="text" class="popup__form-item popup__form-item_type_name" name="form-profile-name" placeholder="Жак Ив Кусто" required>
+                        <input type="text" class="popup__form-item popup__form-item_type_description" name="form-profile-description" placeholder="Исследователь океана" required>
+                        <input type="submit" value="Сохранить" class="popup__form-button">
+                    </fieldset>
+                    <button class="popup__button-close button" type="button">
                   </button>
-              </form>
-              <h2 class="popup__header-img">Наименование</h2>
-          </div>
-      </section>
+                </form>
+            </div>
+        </section>
+
+        <section class="popup popup_type_image">
+            <div class="popup__container-img">
+                <form class="popup__form" name="popupImage-form">
+                    <img class="popup__img" src="./images/no_image.png" alt="Изображение" />
+                    <button class="popup__button-close button" type="button">
+                  </button>
+                </form>
+                <h2 class="popup__header-img">Наименование</h2>
+            </div>
+        </section>
 
     </div>
 
