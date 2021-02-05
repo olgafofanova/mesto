@@ -53,8 +53,6 @@ const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
 const popupHeaderImg = popupImg.querySelector('.popup__header-img');
 const popupImage = popupImg.querySelector('.popup__img');
-//debugger;
-
 
 const popups = document.querySelectorAll('.popup');
 popups.forEach((item) => {
@@ -89,11 +87,13 @@ function addElements(elem) { // добавление карточки к гал�
 
 function openPopup(popup) {
     popup.classList.add('popup_opened'); // открываем попап
+    document.addEventListener('keydown', waitEscape);
 }
 
 function hidePopup(evt) {
     if (evt.target === evt.currentTarget) {
         evt.target.closest('.popup').classList.remove('popup_opened');
+        document.removeEventListener('keydown', waitEscape);
     }
 }
 
@@ -107,18 +107,17 @@ function openEditProfile() {
     nameInputProfile.value = profileName.textContent;
     jobInputProfile.value = profileDescription.textContent;
     openPopup(popupProfile);
-    buttonStateInactive (buttonSubmitProfile);
 }
 
 function openAddElement() {
     openPopup(popupAdd);
     nameInputAdd.value = '';
     jobInputAdd.value = '';
-    buttonStateInactive (buttonSubmitAdd);
+    buttonStateInactive(buttonSubmitAdd);
 }
 
 const buttonStateInactive = (button) => {
-  button.classList.add('popup__button-submit_inactive');
+    button.classList.add('popup__button-submit_inactive');
 };
 
 function openPopupImg(evt) {
@@ -153,6 +152,26 @@ function toggleLikeElement(event) {
 function deleteElement(event) {
     if (event.target === event.currentTarget) {
         event.target.closest('.element').remove();
+    }
+}
+
+function containsClass(popupForm) {
+    if (popupForm.classList.contains('popup_opened')) {
+        popupForm.classList.remove('popup_opened');
+    }
+}
+
+// document.addEventListener('keydown', function(evt) {
+//     if ((evt.key) === 'Escape') {
+//         containsClass(popupAdd);
+//         containsClass(popupProfile);
+//     }
+// });
+
+function waitEscape(evt) {
+    if ((evt.key) === 'Escape') {
+        containsClass(popupAdd);
+        containsClass(popupProfile);
     }
 }
 
