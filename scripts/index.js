@@ -38,14 +38,16 @@ closeButtons.forEach((button) => {
 const popupAdd = document.querySelector('.popup_add'); // попап профиля - добавления картинок
 const formElementAdd = popupAdd.querySelector('.popup__form');
 formElementAdd.addEventListener('submit', handleFormAddSubmit);
-const nameInputAdd = popupAdd.querySelector('.popup__form-item_type_name');
-const jobInputAdd = popupAdd.querySelector('.popup__form-item_type_description');
+const nameInputAdd = popupAdd.querySelector('.popup__input_type_name');
+const jobInputAdd = popupAdd.querySelector('.popup__input_type_description');
+const buttonSubmitAdd = popupAdd.querySelector('.popup__button-submit');
 
 const popupProfile = document.querySelector('.popup_profile'); // попап профиля - добавления картинок
 const formElementProfile = popupProfile.querySelector('.popup__form');
 formElementProfile.addEventListener('submit', handleFormProfileSubmit);
-const nameInputProfile = popupProfile.querySelector('.popup__form-item_type_name');
-const jobInputProfile = popupProfile.querySelector('.popup__form-item_type_description');
+const nameInputProfile = popupProfile.querySelector('.popup__input_type_name');
+const jobInputProfile = popupProfile.querySelector('.popup__input_type_description');
+const buttonSubmitProfile = popupProfile.querySelector('.popup__button-submit');
 
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
@@ -105,11 +107,19 @@ function openEditProfile() {
     nameInputProfile.value = profileName.textContent;
     jobInputProfile.value = profileDescription.textContent;
     openPopup(popupProfile);
+    buttonStateInactive (buttonSubmitProfile);
 }
 
 function openAddElement() {
     openPopup(popupAdd);
+    nameInputAdd.value = '';
+    jobInputAdd.value = '';
+    buttonStateInactive (buttonSubmitAdd);
 }
+
+const buttonStateInactive = (button) => {
+  button.classList.add('popup__button-submit_inactive');
+};
 
 function openPopupImg(evt) {
     popupHeaderImg.textContent = evt.target.alt;

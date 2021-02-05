@@ -40,14 +40,41 @@
             <p class="footer__copy">&copy; 2020 Mesto Russia</p>
         </footer>
 
+        <section class="popup popup_type_profile-add popup_profile">
+          <div class="popup__container">
+              <h2 class="popup__header">Редактировать профиль</h2>
+              <form class="popup__form" name="popup-form" novalidate>
+                  <fieldset class="popup__fieldset">
+                    <label class="popup__field">
+                      <input type="text" class="popup__input popup__input_type_name" id="profile-name" placeholder="Жак Ив Кусто" required minlength="2" maxlength="40">
+                      <span class="popup__input-error profile-name-error"></span>
+                    </label>
+                    <label class="popup__field">
+                      <input type="text" class="popup__input popup__input_type_description" id="profile-description" placeholder="Исследователь океана" required  minlength="2" maxlength="200">
+                      <span class="popup__input-error profile-description-error">jgbcfybt</span>
+                    </label>
+                      <input type="submit" value="Сохранить" class="popup__button-submit">
+                  </fieldset>
+                  <button class="popup__button-close button" type="button">
+                </button>
+              </form>
+          </div>
+      </section>
+
         <section class="popup popup_type_profile-add popup_add">
             <div class="popup__container">
                 <h2 class="popup__header">Новое место</h2>
-                <form class="popup__form" name="popup-form">
+                <form class="popup__form" name="popup-form" novalidate>
                     <fieldset class="popup__fieldset">
-                        <input type="text" class="popup__form-item popup__form-item_type_name" name="form-profile-name" placeholder="Название" required>
-                        <input type="text" class="popup__form-item popup__form-item_type_description" name="form-profile-description" placeholder="Ссылка на картинку" required>
-                        <input type="submit" value="Создать" class="popup__form-button">
+                      <label class="popup__field">
+                        <input type="text" class="popup__input popup__input_type_name" id="add-name" placeholder="Название" required  minlength="2" maxlength="30">
+                        <span class="popup__input-error add-name-error"></span>
+                      </label>
+                        <label class="popup__field">
+                        <input type="url" class="popup__input popup__input_type_description" id="add-url" placeholder="Ссылка на картинку" required>
+                        <span class="popup__input-error add-url-error"></span>
+                      </label>
+                        <input type="submit" value="Создать" class="popup__button-submit">
                     </fieldset>
                     <button class="popup__button-close button" type="button">
                     </button>
@@ -55,24 +82,9 @@
             </div>
         </section>
 
-        <section class="popup popup_type_profile-add popup_profile">
-            <div class="popup__container">
-                <h2 class="popup__header">Редактировать профиль</h2>
-                <form class="popup__form" name="popup-form">
-                    <fieldset class="popup__fieldset">
-                        <input type="text" class="popup__form-item popup__form-item_type_name" name="form-profile-name" placeholder="Жак Ив Кусто" required>
-                        <input type="text" class="popup__form-item popup__form-item_type_description" name="form-profile-description" placeholder="Исследователь океана" required>
-                        <input type="submit" value="Сохранить" class="popup__form-button">
-                    </fieldset>
-                    <button class="popup__button-close button" type="button">
-                  </button>
-                </form>
-            </div>
-        </section>
-
         <section class="popup popup_type_image">
             <div class="popup__container-img">
-                <form class="popup__form" name="popupImage-form">
+                <form name="popupImage-form" novalidate>
                     <img class="popup__img" src="./images/no_image.png" alt="Изображение" />
                     <button class="popup__button-close button" type="button">
                   </button>
@@ -97,6 +109,7 @@
     </template>
 
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validate.js"></script>
 </body>
 
 </html>
