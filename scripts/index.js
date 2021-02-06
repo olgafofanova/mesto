@@ -172,6 +172,7 @@ function waitEscape(evt) {
     if ((evt.key) === 'Escape') {
         containsClass(popupAdd);
         containsClass(popupProfile);
+        containsClass(popupImg);
     }
 }
 
