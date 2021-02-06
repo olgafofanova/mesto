@@ -1,29 +1,3 @@
-const initialCards = [{
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
-
 const elementTemplate = document.querySelector(".element_template").content; // шаблон
 const elements = document.querySelector(".elements"); //галерея
 const buttonAdd = document.querySelector(".profile__button-add");
@@ -66,7 +40,7 @@ function render() {
     initialCards.forEach((item) => {
         addElements(renderItem(item));
     });
-};
+}
 
 function renderItem(item) { // построение карточки элемента
     const userElement = elementTemplate.cloneNode(true); // клонируем содержимое тега template
@@ -76,9 +50,10 @@ function renderItem(item) { // построение карточки элеме�
     userElement.querySelector('.element__description').textContent = item.name;
     userElement.querySelector('.element__button-like').addEventListener('click', toggleLikeElement);
     userElement.querySelector('.element__button-delete').addEventListener('click', deleteElement);
-    userElement.querySelector('.element__img').addEventListener('click', openPopupImg);
+    // userElement.querySelector('.element__img').addEventListener('click', openPopupImg);
+    elementImg.addEventListener('click', openPopupImg);
     return userElement;
-};
+}
 
 function addElements(elem) { // добавление карточки к галерее elements
     elements.prepend(elem);
@@ -91,10 +66,8 @@ function openPopup(popup) {
 }
 
 function hidePopup(evt) {
-    if (evt.target === evt.currentTarget) {
-        evt.target.closest('.popup').classList.remove('popup_opened');
-        document.removeEventListener('keydown', waitEscape);
-    }
+    evt.target.closest('.popup').classList.remove('popup_opened');
+    document.removeEventListener('keydown', waitEscape);
 }
 
 function clickPopup(evt) {
@@ -144,35 +117,20 @@ function handleFormAddSubmit(evt) {
 }
 
 function toggleLikeElement(event) {
-    if (event.target === event.currentTarget) {
-        event.target.classList.toggle('element__button-like_active');
-    }
+    event.target.classList.toggle('element__button-like_active');
 }
 
 function deleteElement(event) {
-    if (event.target === event.currentTarget) {
-        event.target.closest('.element').remove();
-    }
+    event.target.closest('.element').remove();
 }
-
-function containsClass(popupForm) {
-    if (popupForm.classList.contains('popup_opened')) {
-        popupForm.classList.remove('popup_opened');
-    }
-}
-
-// document.addEventListener('keydown', function(evt) {
-//     if ((evt.key) === 'Escape') {
-//         containsClass(popupAdd);
-//         containsClass(popupProfile);
-//     }
-// });
 
 function waitEscape(evt) {
     if ((evt.key) === 'Escape') {
-        containsClass(popupAdd);
-        containsClass(popupProfile);
-        containsClass(popupImg);
+        const popupOpened = document.querySelector('.popup_opened');
+        console.log(popupOpened);
+        if (popupOpened) {
+            popupOpened.classList.remove('popup_opened');
+        }
     }
 }
 
