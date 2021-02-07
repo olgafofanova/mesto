@@ -50,7 +50,6 @@ function renderItem(item) { // построение карточки элеме�
     userElement.querySelector('.element__description').textContent = item.name;
     userElement.querySelector('.element__button-like').addEventListener('click', toggleLikeElement);
     userElement.querySelector('.element__button-delete').addEventListener('click', deleteElement);
-    // userElement.querySelector('.element__img').addEventListener('click', openPopupImg);
     elementImg.addEventListener('click', openPopupImg);
     return userElement;
 }
@@ -58,7 +57,6 @@ function renderItem(item) { // построение карточки элеме�
 function addElements(elem) { // добавление карточки к галерее elements
     elements.prepend(elem);
 }
-
 
 function openPopup(popup) {
     popup.classList.add('popup_opened'); // открываем попап
@@ -86,12 +84,8 @@ function openAddElement() {
     openPopup(popupAdd);
     nameInputAdd.value = '';
     jobInputAdd.value = '';
-    buttonStateInactive(buttonSubmitAdd);
+    buttonStateInactive(buttonSubmitAdd, classSettingsValid.inactiveButtonClass);
 }
-
-const buttonStateInactive = (button) => {
-    button.classList.add('popup__button-submit_inactive');
-};
 
 function openPopupImg(evt) {
     popupHeaderImg.textContent = evt.target.alt;
@@ -127,7 +121,6 @@ function deleteElement(event) {
 function waitEscape(evt) {
     if ((evt.key) === 'Escape') {
         const popupOpened = document.querySelector('.popup_opened');
-        console.log(popupOpened);
         if (popupOpened) {
             popupOpened.classList.remove('popup_opened');
         }

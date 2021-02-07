@@ -26,11 +26,14 @@ const hasInvalidInput = (inputList) => {
     })
 };
 
+const buttonStateInactive = (buttonElement, inactiveButtonClass) => {
+    buttonElement.classList.add(inactiveButtonClass);
+    buttonElement.setAttribute('disabled', true);
+};
+
 const toggleButtonState = (inputList, buttonElement, obj) => {
     if (hasInvalidInput(inputList)) {
-        buttonElement.classList.add(obj.inactiveButtonClass);
-        buttonElement.setAttribute('disabled', true);
-        console.log(buttonElement);
+        buttonStateInactive(buttonElement, obj.inactiveButtonClass);
     } else {
         buttonElement.classList.remove(obj.inactiveButtonClass);
         buttonElement.removeAttribute('disabled');
@@ -59,11 +62,4 @@ const enableValidation = (obj) => {
     });
 };
 
-enableValidation({
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__button-submit',
-    inactiveButtonClass: 'popup__button-submit_inactive',
-    inputErrorClass: 'popup__input_error',
-    errorClass: 'popup__input-error_active'
-});
+enableValidation(classSettingsValid);
