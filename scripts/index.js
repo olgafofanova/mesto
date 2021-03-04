@@ -62,20 +62,6 @@ popups.forEach((item) => {
 buttonEdit.addEventListener('click', openEditProfile);
 buttonAdd.addEventListener('click', openAddElement);
 
-function render() {
-    // initialCards.forEach((item) => {
-    //     addElements(renderItem(item));
-    // });
-
-
-    initialCards1.forEach((item) => {
-      const card = new Card(item, '.element_template');
-      const cardElement = card.generateCard();
-     // document.querySelector('.card-list__items').prepend(cardElement);
-      elements.prepend(cardElement);
-  });
-
-}
 
 function renderItem(item) { // построение карточки элемента
     const userElement = elementTemplate.cloneNode(true); // клонируем содержимое тега template
@@ -101,6 +87,8 @@ function openPopup(popup) {
 function hidePopup(evt) {
     evt.target.closest('.popup').classList.remove('popup_opened');
     document.removeEventListener('keydown', waitEscape);
+    popupHeaderImg.textContent = '';
+    popupImage.src = '';
 }
 
 function clickPopup(evt) {
@@ -175,38 +163,47 @@ class Card {
     const cardElement = document
       .querySelector(this._cardSelector)
       .content
+      .querySelector('.element')
       .cloneNode(true);
+
     return cardElement;
   }
 
-  _handleOpenPopup() {
-    popupImage.src = this._image;
-    popupElement.classList.add('popup_opened');
-  }
 
-  _handleClosePopup() {
-    popupImage.src = '';
-    popupElement.classList.remove('popup_opened');
-  }
+  _toggleLikeElement(evt) {
+   this._element.querySelector('.element__button-like').classList.toggle('element__button-like_active');
+   evt.stopPropagation();
+    }
 
-  _toggleLikeElement() {
-    //event.target.classList.toggle('element__button-like_active');
-    this._element.querySelector('.element__button-like').classList.toggle('element__button-like_active');
+
+_deleteElement(evt) {
+  //this._element.closest('.element').remove();
+  this._element.remove();
+  evt.stopPropagation();
 }
 
-_deleteElement() {
-   // event.target.closest('.element').remove();
+
+_openPopupImg() {
+  popupImage.src = this._link;
+  popupHeaderImg.textContent = this._name;
+  openPopup(popupImg);
 }
 
+_closePopupImg() {
+  popupImage.src = '';
+  popupHeaderImg.textContent = '';
+}
 
   _setEventListeners() {
-   // this._element.addEventListener('click', () => {
-    //   this._handleOpenPopup();
-    // });
-
-    // popupCloseButton.addEventListener('click', () => {
-    //   this._handleClosePopup();
-    // });
+    this._element.querySelector('.element__button-like').addEventListener('click', (event) => {
+			this._toggleLikeElement(event);
+		});
+    this._element.querySelector('.element__button-delete').addEventListener('click', (event) => {
+			this._deleteElement(event);
+		});
+    this._element.addEventListener('click', (event) => {
+			this._openPopupImg();
+		});
   }
 
   generateCard() {
@@ -214,36 +211,18 @@ _deleteElement() {
     this._element.querySelector('.element__description').textContent = this._name;
     this._element.querySelector('.element__img').src = this._link;
     this._element.querySelector('.element__img').alt = this._name;
-
-
-    // this._setEventListeners();
-    // this._element.querySelector('.card__image').style.backgroundImage = `url(${this._image})`;
-    // this._element.querySelector('.card__title').textContent = this._title;
-    // this._element.querySelector('.card__info').textContent = this._description;
-    // this._element.querySelector('.card__price-property').textContent = this._price;
-
-    // this._element.querySelector('.card__image').style.backgroundImage = `url(${this._image})`;
-    // this._element.querySelector('.card__title').textContent = this._title;
-
-
-
-    // const elementImg = userElement.querySelector('.element__img');
-    // elementImg.src = item.link;
-    // elementImg.alt = item.name;
-    // userElement.querySelector('.element__description').textContent = item.name;
-    // userElement.querySelector('.element__button-like').addEventListener('click', toggleLikeElement);
-    // userElement.querySelector('.element__button-delete').addEventListener('click', deleteElement);
-    // elementImg.addEventListener('click', openPopupImg);
-
-
-
-    return this._element;
-
-
-
-
-
+    this._setEventListeners();
+   return this._element;
   }
+
+}
+
+const render = () => {
+  initialCards1.forEach((item) => {
+    const card = new Card(item, '.element_template');
+    const cardElement = card.generateCard();
+    elements.prepend(cardElement);
+});
 
 }
 
