@@ -1,28 +1,6 @@
-const initialCards1 = [{
-  name: 'Архыз',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-},
-{
-  name: 'Челябинская область',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-},
-{
-  name: 'Иваново',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-},
-{
-  name: 'Камчатка',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-},
-{
-  name: 'Холмогорский район',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-},
-{
-  name: 'Байкал',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-}
-];
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
+import { initialCards, classSettingsValid } from './initial.js';
 
 const elementTemplate = document.querySelector(".element_template").content; // шаблон
 const elements = document.querySelector(".elements"); //галерея
@@ -62,26 +40,21 @@ popups.forEach((item) => {
 buttonEdit.addEventListener('click', openEditProfile);
 buttonAdd.addEventListener('click', openAddElement);
 
-
-function renderItem(item) { // построение карточки элемента
-    const userElement = elementTemplate.cloneNode(true); // клонируем содержимое тега template
-    const elementImg = userElement.querySelector('.element__img');
-    elementImg.src = item.link;
-    elementImg.alt = item.name;
-    userElement.querySelector('.element__description').textContent = item.name;
-    userElement.querySelector('.element__button-like').addEventListener('click', toggleLikeElement);
-    userElement.querySelector('.element__button-delete').addEventListener('click', deleteElement);
-    elementImg.addEventListener('click', openPopupImg);
-    return userElement;
+function addElements(element) { // добавление карточки к галерее elements
+    const card = new Card(element, '.element_template');
+    const cardElement = card.generateCard();
+    elements.prepend(cardElement);
 }
 
-function addElements(elem) { // добавление карточки к галерее elements
-    elements.prepend(elem);
-}
-
-function openPopup(popup) {
+ function openPopup(popup) {
     popup.classList.add('popup_opened'); // открываем попап
     document.addEventListener('keydown', waitEscape);
+}
+
+export function openPopupImg(link, name) {
+  popupImage.src = link;
+  popupHeaderImg.textContent = name;
+  openPopup(popupImg);
 }
 
 function hidePopup(evt) {
@@ -110,12 +83,6 @@ function openAddElement() {
     buttonStateInactive(buttonSubmitAdd, classSettingsValid.inactiveButtonClass);
 }
 
-function openPopupImg(evt) {
-    popupHeaderImg.textContent = evt.target.alt;
-    popupImage.src = evt.target.src;
-    openPopup(popupImg);
-}
-
 function handleFormProfileSubmit(evt) {
     evt.preventDefault();
     profileName.textContent = nameInputProfile.value;
@@ -129,16 +96,9 @@ function handleFormAddSubmit(evt) {
         name: nameInputAdd.value,
         link: jobInputAdd.value
     }
-    addElements(renderItem(newItem));
+    addElements(newItem);
     hidePopup(evt);
-}
 
-function toggleLikeElement(event) {
-    event.target.classList.toggle('element__button-like_active');
-}
-
-function deleteElement(event) {
-    event.target.closest('.element').remove();
 }
 
 function waitEscape(evt) {
@@ -150,84 +110,27 @@ function waitEscape(evt) {
     }
 }
 
-
-class Card {
-  constructor(item, cardSelector) {
-    this._cardSelector = cardSelector;
-    this._name = item.name;
-    this._link = item.link;
-
-  }
-
-  _getTemplate() {
-    const cardElement = document
-      .querySelector(this._cardSelector)
-      .content
-      .querySelector('.element')
-      .cloneNode(true);
-
-    return cardElement;
-  }
-
-
-  _toggleLikeElement(evt) {
-   this._element.querySelector('.element__button-like').classList.toggle('element__button-like_active');
-   evt.stopPropagation();
-    }
-
-
-_deleteElement(evt) {
-  //this._element.closest('.element').remove();
-  this._element.remove();
-  evt.stopPropagation();
-}
-
-
-_openPopupImg() {
-  popupImage.src = this._link;
-  popupHeaderImg.textContent = this._name;
-  openPopup(popupImg);
-}
-
-_closePopupImg() {
-  popupImage.src = '';
-  popupHeaderImg.textContent = '';
-}
-
-  _setEventListeners() {
-    this._element.querySelector('.element__button-like').addEventListener('click', (event) => {
-			this._toggleLikeElement(event);
-		});
-    this._element.querySelector('.element__button-delete').addEventListener('click', (event) => {
-			this._deleteElement(event);
-		});
-    this._element.addEventListener('click', (event) => {
-			this._openPopupImg();
-		});
-  }
-
-  generateCard() {
-    this._element = this._getTemplate();
-    this._element.querySelector('.element__description').textContent = this._name;
-    this._element.querySelector('.element__img').src = this._link;
-    this._element.querySelector('.element__img').alt = this._name;
-    this._setEventListeners();
-   return this._element;
-  }
-
-}
-
-const render = () => {
-  initialCards1.forEach((item) => {
-    const card = new Card(item, '.element_template');
-    const cardElement = card.generateCard();
-    elements.prepend(cardElement);
+const render = (initial) => {
+  initial.forEach((item) => {
+    addElements(item);
 });
 
 }
 
+render(initialCards);
+
+const buttonStateInactive = (buttonElement, inactiveButtonClass) => {
+  buttonElement.classList.add(inactiveButtonClass);
+  buttonElement.setAttribute('disabled', true);
+};
 
 
+const Valid = (obj) => {
+const formList = Array.from(document.querySelectorAll(obj.formSelector));
+formList.forEach((formElement) => {
+  const formValidator = new FormValidator(formElement, obj);
+  const formValidadion = formValidator.enableValidation();
+});
+}
 
-
-render();
+Valid(classSettingsValid);
