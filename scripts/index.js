@@ -10,7 +10,7 @@ const buttonEdit = document.querySelector('.profile__button-edit'); // кноп�
 const popupImg = document.querySelector('.popup_type_image'); // попап показа картинок
 const closeButtons = document.querySelectorAll('.popup__button-close');
 closeButtons.forEach((button) => {
-    button.addEventListener('click', hidePopup);
+  button.addEventListener('click', hidePopup);
 });
 
 const popupAdd = document.querySelector('.popup_add'); // попап профиля - добавления картинок
@@ -34,21 +34,21 @@ const popupImage = popupImg.querySelector('.popup__img');
 
 const popups = document.querySelectorAll('.popup');
 popups.forEach((item) => {
-    item.addEventListener('click', clickPopup);
+  item.addEventListener('click', clickPopup);
 });
 
 buttonEdit.addEventListener('click', openEditProfile);
 buttonAdd.addEventListener('click', openAddElement);
 
 function addElements(element) { // добавление карточки к галерее elements
-    const card = new Card(element, '.element_template');
-    const cardElement = card.generateCard();
-    elements.prepend(cardElement);
+  const card = new Card(element, '.element_template');
+  const cardElement = card.generateCard();
+  elements.prepend(cardElement);
 }
 
- function openPopup(popup) {
-    popup.classList.add('popup_opened'); // открываем попап
-    document.addEventListener('keydown', waitEscape);
+function openPopup(popup) {
+  popup.classList.add('popup_opened'); // открываем попап
+  document.addEventListener('keydown', waitEscape);
 }
 
 export function openPopupImg(link, name) {
@@ -58,62 +58,62 @@ export function openPopupImg(link, name) {
 }
 
 function hidePopup(evt) {
-    evt.target.closest('.popup').classList.remove('popup_opened');
-    document.removeEventListener('keydown', waitEscape);
-    popupHeaderImg.textContent = '';
-    popupImage.src = '';
+  evt.target.closest('.popup').classList.remove('popup_opened');
+  document.removeEventListener('keydown', waitEscape);
+  popupHeaderImg.textContent = '';
+  popupImage.src = '';
 }
 
 function clickPopup(evt) {
-    if (evt.target === evt.currentTarget) {
-        hidePopup(evt);
-    }
+  if (evt.target === evt.currentTarget) {
+    hidePopup(evt);
+  }
 }
 
 function openEditProfile() {
-    nameInputProfile.value = profileName.textContent;
-    jobInputProfile.value = profileDescription.textContent;
-    openPopup(popupProfile);
+  nameInputProfile.value = profileName.textContent;
+  jobInputProfile.value = profileDescription.textContent;
+  openPopup(popupProfile);
 }
 
 function openAddElement() {
-    openPopup(popupAdd);
-    nameInputAdd.value = '';
-    jobInputAdd.value = '';
-    buttonStateInactive(buttonSubmitAdd, classSettingsValid.inactiveButtonClass);
+  openPopup(popupAdd);
+  nameInputAdd.value = '';
+  jobInputAdd.value = '';
+  buttonStateInactive(buttonSubmitAdd, classSettingsValid.inactiveButtonClass);
 }
 
 function handleFormProfileSubmit(evt) {
-    evt.preventDefault();
-    profileName.textContent = nameInputProfile.value;
-    profileDescription.textContent = jobInputProfile.value;
-    hidePopup(evt);
+  evt.preventDefault();
+  profileName.textContent = nameInputProfile.value;
+  profileDescription.textContent = jobInputProfile.value;
+  hidePopup(evt);
 }
 
 function handleFormAddSubmit(evt) {
-    evt.preventDefault();
-    const newItem = {
-        name: nameInputAdd.value,
-        link: jobInputAdd.value
-    }
-    addElements(newItem);
-    hidePopup(evt);
+  evt.preventDefault();
+  const newItem = {
+    name: nameInputAdd.value,
+    link: jobInputAdd.value
+  }
+  addElements(newItem);
+  hidePopup(evt);
 
 }
 
 function waitEscape(evt) {
-    if ((evt.key) === 'Escape') {
-        const popupOpened = document.querySelector('.popup_opened');
-        if (popupOpened) {
-            popupOpened.classList.remove('popup_opened');
-        }
+  if ((evt.key) === 'Escape') {
+    const popupOpened = document.querySelector('.popup_opened');
+    if (popupOpened) {
+      popupOpened.classList.remove('popup_opened');
     }
+  }
 }
 
 const render = (initial) => {
   initial.forEach((item) => {
     addElements(item);
-});
+  });
 
 }
 
@@ -126,11 +126,11 @@ const buttonStateInactive = (buttonElement, inactiveButtonClass) => {
 
 
 const Valid = (obj) => {
-const formList = Array.from(document.querySelectorAll(obj.formSelector));
-formList.forEach((formElement) => {
-  const formValidator = new FormValidator(formElement, obj);
-  const formValidadion = formValidator.enableValidation();
-});
+  const formList = Array.from(document.querySelectorAll(obj.formSelector));
+  formList.forEach((formElement) => {
+    const formValidator = new FormValidator(formElement, obj);
+    const formValidadion = formValidator.enableValidation();
+  });
 }
 
 Valid(classSettingsValid);
