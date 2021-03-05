@@ -8,6 +8,11 @@ const buttonAdd = document.querySelector(".profile__button-add");
 const buttonEdit = document.querySelector('.profile__button-edit'); // кнопка редактирования профиля
 
 const popupImg = document.querySelector('.popup_type_image'); // попап показа картинок
+popupImg.addEventListener('mousedown', clearPopupImg);
+
+const closeButtonImg = popupImg.querySelector('.popup__button-close');
+closeButtonImg.addEventListener('click', clearPopupImg);
+
 const closeButtons = document.querySelectorAll('.popup__button-close');
 closeButtons.forEach((button) => {
   button.addEventListener('click', hidePopup);
@@ -15,6 +20,9 @@ closeButtons.forEach((button) => {
 
 const popupAdd = document.querySelector('.popup_add'); // попап профиля - добавления картинок
 const formElementAdd = popupAdd.querySelector('.popup__form');
+const formAddValidator = new FormValidator(formElementAdd, classSettingsValid);  // включение валидации формы
+const formAddValidadion = formAddValidator.enableValidation();
+
 formElementAdd.addEventListener('submit', handleFormAddSubmit);
 const nameInputAdd = popupAdd.querySelector('.popup__input_type_name');
 const jobInputAdd = popupAdd.querySelector('.popup__input_type_description');
@@ -22,6 +30,9 @@ const buttonSubmitAdd = popupAdd.querySelector('.popup__button-submit');
 
 const popupProfile = document.querySelector('.popup_profile'); // попап профиля - добавления картинок
 const formElementProfile = popupProfile.querySelector('.popup__form');
+const formProfileValidator = new FormValidator(formElementProfile, classSettingsValid);  // включение валидации формы
+const formProfileValidadion = formProfileValidator.enableValidation();
+
 formElementProfile.addEventListener('submit', handleFormProfileSubmit);
 const nameInputProfile = popupProfile.querySelector('.popup__input_type_name');
 const jobInputProfile = popupProfile.querySelector('.popup__input_type_description');
@@ -34,14 +45,14 @@ const popupImage = popupImg.querySelector('.popup__img');
 
 const popups = document.querySelectorAll('.popup');
 popups.forEach((item) => {
-  item.addEventListener('click', clickPopup);
+  item.addEventListener('mousedown', clickPopup);
 });
 
 buttonEdit.addEventListener('click', openEditProfile);
 buttonAdd.addEventListener('click', openAddElement);
 
 function addElements(element) { // добавление карточки к галерее elements
-  const card = new Card(element, '.element_template');
+  const card = new Card(element, '.element_template', openPopupImg);
   const cardElement = card.generateCard();
   elements.prepend(cardElement);
 }
@@ -60,6 +71,9 @@ export function openPopupImg(link, name) {
 function hidePopup(evt) {
   evt.target.closest('.popup').classList.remove('popup_opened');
   document.removeEventListener('keydown', waitEscape);
+}
+
+function clearPopupImg() {
   popupHeaderImg.textContent = '';
   popupImage.src = '';
 }
@@ -80,7 +94,7 @@ function openAddElement() {
   openPopup(popupAdd);
   nameInputAdd.value = '';
   jobInputAdd.value = '';
-  buttonStateInactive(buttonSubmitAdd, classSettingsValid.inactiveButtonClass);
+  formAddValidator.buttonStateInactive(buttonSubmitAdd, classSettingsValid.inactiveButtonClass);
 }
 
 function handleFormProfileSubmit(evt) {
@@ -98,7 +112,6 @@ function handleFormAddSubmit(evt) {
   }
   addElements(newItem);
   hidePopup(evt);
-
 }
 
 function waitEscape(evt) {
@@ -118,19 +131,3 @@ const render = (initial) => {
 }
 
 render(initialCards);
-
-const buttonStateInactive = (buttonElement, inactiveButtonClass) => {
-  buttonElement.classList.add(inactiveButtonClass);
-  buttonElement.setAttribute('disabled', true);
-};
-
-
-const Valid = (obj) => {
-  const formList = Array.from(document.querySelectorAll(obj.formSelector));
-  formList.forEach((formElement) => {
-    const formValidator = new FormValidator(formElement, obj);
-    const formValidadion = formValidator.enableValidation();
-  });
-}
-
-Valid(classSettingsValid);

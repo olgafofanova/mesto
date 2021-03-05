@@ -1,11 +1,9 @@
-import { openPopupImg } from './index.js';
-
 export default class Card {
-  constructor(item, cardSelector, popupImage) {
+  constructor(item, cardSelector, openPopupImg) {
     this._cardSelector = cardSelector;
-    this._popupImage = popupImage;
     this._name = item.name;
     this._link = item.link;
+    this._openPopupImg = openPopupImg;
   }
 
   _getTemplate() {
@@ -25,6 +23,7 @@ export default class Card {
 
   _deleteElement(evt) {
     this._element.remove();
+    this._element = null;
     evt.stopPropagation();
   }
 
@@ -35,16 +34,17 @@ export default class Card {
     this._element.querySelector('.element__button-delete').addEventListener('click', (event) => {
       this._deleteElement(event);
     });
-    this._element.addEventListener('click', (event) => {
-      openPopupImg(this._link, this._name);
+    this._element.querySelector('.element__img').addEventListener('click', (event) => {
+      this._openPopupImg(this._link, this._name);
     });
   }
 
   generateCard() {
     this._element = this._getTemplate();
     this._element.querySelector('.element__description').textContent = this._name;
-    this._element.querySelector('.element__img').src = this._link;
-    this._element.querySelector('.element__img').alt = this._name;
+    const elementImg = this._element.querySelector('.element__img');
+    elementImg.src = this._link;
+    elementImg.alt = this._name;
     this._setEventListeners();
     return this._element;
   }
