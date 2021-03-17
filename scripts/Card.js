@@ -1,9 +1,10 @@
 export default class Card {
     //  constructor(item, cardSelector, openPopupImg) {
-    constructor(item, cardSelector) {
+    constructor(item, cardSelector,handleCardClick) {
         this._cardSelector = cardSelector;
         this._name = item.name;
         this._link = item.link;
+        this._handleCardClick = handleCardClick;
         //  this._openPopupImg = openPopupImg;
     }
 
@@ -35,9 +36,21 @@ export default class Card {
         this._element.querySelector('.element__button-delete').addEventListener('click', (event) => {
             this._deleteElement(event);
         });
+
+        // this._element.querySelector('.element__img').addEventListener('click', (event) => {
+        //        this._openPopupImg(this._link, this._name);
+        // });
+
         this._element.querySelector('.element__img').addEventListener('click', (event) => {
-            //   this._openPopupImg(this._link, this._name);
-        });
+          console.log(this._handleCardClick);
+         // this._handleCardClick(this._link, this._name);
+
+   });
+
+
+
+
+
     }
 
     generateCard() {

@@ -10,9 +10,10 @@ import UserInfo from './UserInfo.js';
 
 // const elementTemplate = document.querySelector('.element_template').content; // шаблон
 // const elements = document.querySelector('.elements'); //галерея
-// const buttonAdd = document.querySelector(".profile__button-add");
-// const buttonEdit = document.querySelector('.profile__button-edit'); // кнопка редактирования профиля
-
+const buttonAdd = document.querySelector(".profile__button-add");
+const buttonEdit = document.querySelector('.profile__button-edit'); // кнопка редактирования профиля
+// buttonEdit.addEventListener('click', openEditProfile);
+// buttonAdd.addEventListener('click', openAddElement);
 // const popupImg = document.querySelector('.popup_type_image'); // попап показа картинок
 // popupImg.addEventListener('mousedown', clearPopupImg);
 
@@ -44,8 +45,8 @@ import UserInfo from './UserInfo.js';
 // const jobInputProfile = popupProfile.querySelector('.popup__input_type_description');
 // const buttonSubmitProfile = popupProfile.querySelector('.popup__button-submit');
 
-// const profileName = document.querySelector('.profile__name');
-// const profileDescription = document.querySelector('.profile__description');
+const profileName = document.querySelector('.profile__name');
+const profileDescription = document.querySelector('.profile__description');
 // const popupHeaderImg = popupImg.querySelector('.popup__header-img');
 // const popupImage = popupImg.querySelector('.popup__img');
 
@@ -54,8 +55,7 @@ import UserInfo from './UserInfo.js';
 //     item.addEventListener('mousedown', clickPopup);
 // });
 
-// buttonEdit.addEventListener('click', openEditProfile);
-// buttonAdd.addEventListener('click', openAddElement);
+
 
 // function addElements(element) { // добавление карточки к галерее elements
 //     const card = new Card(element, '.element_template', openPopupImg);
@@ -155,3 +155,48 @@ const cardsList = new Section({
 
 // отрисовка карточек
 cardsList.renderItems();
+
+//Для каждого попапа свой экземпляр класса PopupWithForm
+const popupAdd = new PopupWithForm(
+  '.popup_add',
+  (item) => {
+    const card = new Card(item, '.element_template',
+    (link,name) => {
+          popupImage.src = link;
+    popupHeaderImg.textContent = name;
+   }
+    // export function openPopupImg(link, name) {
+//     popupImage.src = link;
+//     popupHeaderImg.textContent = name;
+//     openPopup(popupImg);
+// }
+    );
+
+    const cardElement = card.generateCard();
+    cardsList.addItem(cardElement);
+  }
+);
+popupAdd._setEventListeners();
+buttonAdd.addEventListener('click', popupAdd.open.bind(popupAdd));
+
+const popupProfile = new PopupWithForm(
+  '.popup_profile',
+  (item) => {
+     profileName.textContent = item.name;
+     profileDescription.textContent = item.description;
+  }
+);
+popupProfile._setEventListeners();
+ buttonEdit.addEventListener('click', popupProfile.open.bind(popupProfile));
+
+// попап показа картинок
+const popupImg = new PopupWithImage({},
+  '.popup_type_image');
+ // popupImg._setEventListeners();
+
+
+// const popupImg = document.querySelector('.popup_type_image'); // попап показа картинок
+// popupImg.addEventListener('mousedown', clearPopupImg);
+
+// const closeButtonImg = popupImg.querySelector('.popup__button-close');
+// closeButtonImg.addEventListener('click', clearPopupImg);

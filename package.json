@@ -1,0 +1,19 @@
+{
+  "name": "mesto",
+  "version": "1.0.0",
+  "description": "Ссылка на проект https://olgafofanova.github.io/mesto/\r ### Обзор",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olgafofanova/mesto.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/olgafofanova/mesto/issues"
+  },
+  "homepage": "https://github.com/olgafofanova/mesto#readme"
+}

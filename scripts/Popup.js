@@ -1,27 +1,32 @@
 export default class Popup {
     constructor(popupSelector) {
-        this._popupSelector = popupSelector;
+        this._popup = document.querySelector(popupSelector);
     }
 
     open() {
-        this._popupSelector.classList.add('popup_opened');
-        document.addEventListener('keydown', waitEscape);
+      this._popup.classList.add('popup_opened');
+     // document.addEventListener('keydown', this._handleEscClose(evt));
+      document.addEventListener('keydown', (event) => {
+        this._handleEscClose(event);
+      });
     }
 
     close() {
-        this._popupSelector.classList.remove('popup_opened');
+      this._popup.classList.remove('popup_opened');
     }
 
-    _handleEscClose() {
+    _handleEscClose(evt) {
         //содержит логику закрытия попапа клавишей Esc.
-        document.removeEventListener('keydown', waitEscape);
-        //     document.addEventListener('keydown', waitEscape);
+        if ((evt.key) === 'Escape') {
+          this.close()
+              }
     }
 
     setEventListeners() {
-        // обавляет слушатель клика иконке закрытия попапа
-        // this._element.querySelector('.element__button-delete').addEventListener('click', (event) => {
-        //   this._deleteElement(event);
-        // });
+        // добавляет слушателя клика иконке закрытия попапа
+        this._popup.querySelector('.popup__button-close').addEventListener('click', (event) => {
+          this.close();
+          //this.close.bind(this);
+        });
     }
 }
