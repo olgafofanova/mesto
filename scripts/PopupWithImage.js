@@ -6,11 +6,10 @@ export default class PopupWithImage extends Popup {
         this._image = data.image;
     }
 
+    open(link,name) {
+      this._popup.querySelector('.popup__img').src = link;
+      this._popup.querySelector('.popup__header-img').textContent = name;
 
-    open() {
-
+      super.open();
     }
 }
-
-//open. В методе open класса PopupWithImage нужно
-//вставлять в попап картинку и атрибут src изображения и подпись к картинке.

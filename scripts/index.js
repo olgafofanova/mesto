@@ -138,14 +138,16 @@ const profileDescription = document.querySelector('.profile__description');
 
 // render(initialCards);
 
-//Для каждого попапа создавайте свой экземпляр класса PopupWithForm
 
 const cardsList = new Section({
         items: initialCards,
         renderer: (item) => {
             //// добавление карточки к галерее elements
-            //const card = new Card(item, '.element_template', openPopupImg);
-            const card = new Card(item, '.element_template');
+            const card = new Card(item, '.element_template',
+            (link,name) => {
+              popupImg.open(link,name);
+           }
+            );
             const cardElement = card.generateCard();
             cardsList.addItem(cardElement);
         },
@@ -157,21 +159,15 @@ const cardsList = new Section({
 cardsList.renderItems();
 
 //Для каждого попапа свой экземпляр класса PopupWithForm
+// попап добавления картинок
 const popupAdd = new PopupWithForm(
   '.popup_add',
   (item) => {
     const card = new Card(item, '.element_template',
     (link,name) => {
-          popupImage.src = link;
-    popupHeaderImg.textContent = name;
+      popupImg.open(link,name);
    }
-    // export function openPopupImg(link, name) {
-//     popupImage.src = link;
-//     popupHeaderImg.textContent = name;
-//     openPopup(popupImg);
-// }
     );
-
     const cardElement = card.generateCard();
     cardsList.addItem(cardElement);
   }
@@ -179,6 +175,7 @@ const popupAdd = new PopupWithForm(
 popupAdd._setEventListeners();
 buttonAdd.addEventListener('click', popupAdd.open.bind(popupAdd));
 
+// попап профиля
 const popupProfile = new PopupWithForm(
   '.popup_profile',
   (item) => {
@@ -192,11 +189,12 @@ popupProfile._setEventListeners();
 // попап показа картинок
 const popupImg = new PopupWithImage({},
   '.popup_type_image');
- // popupImg._setEventListeners();
+ popupImg.setEventListeners();
 
+const formElementAdd = document.querySelector('.popup_add').querySelector('.popup__form');
+const formAddValidator = new FormValidator(formElementAdd, classSettingsValid); // включение валидации формы
+const formAddValidadion = formAddValidator.enableValidation();
 
-// const popupImg = document.querySelector('.popup_type_image'); // попап показа картинок
-// popupImg.addEventListener('mousedown', clearPopupImg);
-
-// const closeButtonImg = popupImg.querySelector('.popup__button-close');
-// closeButtonImg.addEventListener('click', clearPopupImg);
+const formElementProfile = document.querySelector('.popup_profile').querySelector('.popup__form');
+const formProfileValidator = new FormValidator(formElementProfile, classSettingsValid); // включение валидации формы
+const formProfileValidadion = formProfileValidator.enableValidation();

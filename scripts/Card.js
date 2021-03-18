@@ -1,11 +1,10 @@
 export default class Card {
-    //  constructor(item, cardSelector, openPopupImg) {
     constructor(item, cardSelector,handleCardClick) {
+      //handleCardClick должна открывать попап с картинкой при клике на карточку.
         this._cardSelector = cardSelector;
         this._name = item.name;
         this._link = item.link;
         this._handleCardClick = handleCardClick;
-        //  this._openPopupImg = openPopupImg;
     }
 
     _getTemplate() {
@@ -14,7 +13,6 @@ export default class Card {
             .content
             .querySelector('.element')
             .cloneNode(true);
-
         return cardElement;
     }
 
@@ -37,20 +35,9 @@ export default class Card {
             this._deleteElement(event);
         });
 
-        // this._element.querySelector('.element__img').addEventListener('click', (event) => {
-        //        this._openPopupImg(this._link, this._name);
-        // });
-
         this._element.querySelector('.element__img').addEventListener('click', (event) => {
-          console.log(this._handleCardClick);
-         // this._handleCardClick(this._link, this._name);
-
+          this._handleCardClick(this._link, this._name)
    });
-
-
-
-
-
     }
 
     generateCard() {
@@ -63,5 +50,3 @@ export default class Card {
         return this._element;
     }
 }
-
-// Card принимал в конструктор функцию handleCardClick. Эта функция должна открывать попап с картинкой при клике на карточку.

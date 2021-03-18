@@ -5,7 +5,6 @@ export default class Popup {
 
     open() {
       this._popup.classList.add('popup_opened');
-     // document.addEventListener('keydown', this._handleEscClose(evt));
       document.addEventListener('keydown', (event) => {
         this._handleEscClose(event);
       });
@@ -26,7 +25,13 @@ export default class Popup {
         // добавляет слушателя клика иконке закрытия попапа
         this._popup.querySelector('.popup__button-close').addEventListener('click', (event) => {
           this.close();
-          //this.close.bind(this);
+        });
+
+        // закрытие попапа при клике на попапе мимо картинки
+        this._popup.addEventListener('mousedown', (event) => {
+          if (event.target === event.currentTarget) {
+            this.close();
+                 }
         });
     }
 }
