@@ -45,8 +45,8 @@ const buttonEdit = document.querySelector('.profile__button-edit'); // кноп�
 // const jobInputProfile = popupProfile.querySelector('.popup__input_type_description');
 // const buttonSubmitProfile = popupProfile.querySelector('.popup__button-submit');
 
-const profileName = document.querySelector('.profile__name');
-const profileDescription = document.querySelector('.profile__description');
+// const profileName = document.querySelector('.profile__name');
+// const profileDescription = document.querySelector('.profile__description');
 // const popupHeaderImg = popupImg.querySelector('.popup__header-img');
 // const popupImage = popupImg.querySelector('.popup__img');
 
@@ -158,6 +158,8 @@ const cardsList = new Section({
 // отрисовка карточек
 cardsList.renderItems();
 
+const userInfo= new UserInfo('.profile__name','.profile__description');
+
 //Для каждого попапа свой экземпляр класса PopupWithForm
 // попап добавления картинок
 const popupAdd = new PopupWithForm(
@@ -179,12 +181,13 @@ buttonAdd.addEventListener('click', popupAdd.open.bind(popupAdd));
 const popupProfile = new PopupWithForm(
   '.popup_profile',
   (item) => {
-     profileName.textContent = item.name;
-     profileDescription.textContent = item.description;
+    userInfo.setUserInfo(item);
   }
 );
 popupProfile._setEventListeners();
- buttonEdit.addEventListener('click', popupProfile.open.bind(popupProfile));
+
+ buttonEdit.addEventListener('click',popupProfile.open.bind(popupProfile, userInfo.getUserInfo.bind(userInfo)));
+
 
 // попап показа картинок
 const popupImg = new PopupWithImage({},

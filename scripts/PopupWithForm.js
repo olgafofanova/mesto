@@ -11,6 +11,13 @@ export default class PopupWithForm extends Popup {
       this._popup.querySelector('.popup__form').reset();
     }
 
+    open(userinfo,event) {
+      const usinfo = userinfo();
+      this._popup.querySelector('.popup__input_type_name').value = usinfo.name;
+      this._popup.querySelector('.popup__input_type_description').value = usinfo.description;
+      super.open();
+    }
+
     _setEventListeners() {
 super.setEventListeners();
 //добавение обработчика сабмита формы
