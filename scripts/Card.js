@@ -1,6 +1,6 @@
 export default class Card {
-    constructor(item, cardSelector,handleCardClick) {
-      //handleCardClick должна открывать попап с картинкой при клике на карточку.
+    constructor(item, cardSelector, handleCardClick) {
+        //handleCardClick должна открывать попап с картинкой при клике на карточку.
         this._cardSelector = cardSelector;
         this._name = item.name;
         this._link = item.link;
@@ -36,8 +36,8 @@ export default class Card {
         });
 
         this._element.querySelector('.element__img').addEventListener('click', (event) => {
-          this._handleCardClick(this._link, this._name)
-   });
+            this._handleCardClick(this._link, this._name)
+        });
     }
 
     generateCard() {
