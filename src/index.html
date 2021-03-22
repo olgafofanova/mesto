@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Проект 4: Место</title>
+
+</head>
+
+<body class="body">
+    <div class="page">
+        <header class="header">
+            <a href="#" target="_blank">
+                <img class="header__logo link" src="<%=require('./images/logo.svg')%>"  alt="Логотип" />
+            </a>
+        </header>
+        <main class="content">
+
+            <section class="profile">
+                <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="аватар" />
+                <div class="profile__info">
+                    <div class="profile__name-edit">
+                        <h1 class="profile__name block">Жак-Ив Кусто</h1>
+                        <button class="profile__button-edit button" type="button">
+            </button>
+                    </div>
+                    <p class="profile__description block">Исследователь океана</p>
+                </div>
+                <button class="profile__button-add button" type="button">
+        </button>
+            </section>
+
+            <section class="elements">
+            </section>
+
+        </main>
+
+        <footer class="footer">
+            <p class="footer__copy">&copy; 2020 Mesto Russia</p>
+        </footer>
+
+        <section class="popup popup_type_profile-add popup_profile">
+            <div class="popup__container">
+                <h2 class="popup__header">Редактировать профиль2</h2>
+                <form class="popup__form" name="popup-form-profile" novalidate>
+                    <fieldset class="popup__fieldset">
+                        <label class="popup__field">
+              <input type="text" class="popup__input popup__input_type_name" id="profile-name" name = "name"
+                placeholder="Жак Ив Кусто" value="Жак Ив Кусто" required minlength="2" maxlength="40">
+              <span class="popup__input-error profile-name-error"></span>
+            </label>
+                        <label class="popup__field">
+              <input type="text" class="popup__input popup__input_type_description" id="profile-description" name = "description"
+                placeholder="Исследователь океана" value="Исследователь океана" required minlength="2" maxlength="200">
+              <span class="popup__input-error profile-description-error"></span>
+            </label>
+                        <input type="submit" value="Сохранить" class="popup__button-submit">
+                    </fieldset>
+                    <button class="popup__button-close button" type="button">
+          </button>
+                </form>
+            </div>
+        </section>
+
+        <section class="popup popup_type_profile-add popup_add">
+            <div class="popup__container">
+                <h2 class="popup__header">Новое место</h2>
+                <form class="popup__form" name="popup-form-add" novalidate>
+                    <fieldset class="popup__fieldset">
+                        <label class="popup__field">
+              <input type="text" class="popup__input popup__input_type_name" id="add-name" name = "name" placeholder="Название"
+                required minlength="2" maxlength="30">
+              <span class="popup__input-error add-name-error"></span>
+            </label>
+                        <label class="popup__field">
+              <input type="url" class="popup__input popup__input_type_description" id="add-url" name = "link"
+                placeholder="Ссылка на картинку" required>
+              <span class="popup__input-error add-url-error"></span>
+            </label>
+                        <input type="submit" value="Создать" class="popup__button-submit">
+                    </fieldset>
+                    <button class="popup__button-close button" type="button">
+          </button>
+                </form>
+            </div>
+        </section>
+
+        <section class="popup popup_type_image">
+            <div class="popup__container-img">
+                <form name="popupImage-form" novalidate>
+                    <img class="popup__img" src="<%=require('./images/no_image.png')%>" alt="Изображение" />
+                    <button class="popup__button-close button" type="button">
+          </button>
+                </form>
+                <h2 class="popup__header-img">Наименование</h2>
+            </div>
+        </section>
+
+    </div>
+
+    <template class="element_template">
+    <article class="element">
+      <button class="element__button-delete button" type="button"></button>
+      <img class="element__img" src="./images/no_image.png" alt="Изображение" />
+      <div class="element__info">
+        <h2 class="element__description block"></h2>
+        <button class="element__button-like button" type="button">
+        </button>
+      </div>
+    </article>
+
+  </template>
+
+</body>
+
+</html>

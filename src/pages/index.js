@@ -1,12 +1,12 @@
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
-import { initialCards, classSettingsValid } from './initial.js';
-
-import Section from './Section.js';
-import Popup from './Popup.js';
-import PopupWithImage from './PopupWithImage.js';
-import PopupWithForm from './PopupWithForm.js';
-import UserInfo from './UserInfo.js';
+//<link rel="stylesheet" href="./pages/index.css" />
+import '../pages/index.css';
+import Card from '../scripts/components/Card.js';
+import FormValidator from '../scripts/components/FormValidator.js';
+import { initialCards, classSettingsValid } from '../scripts/initial.js';
+import Section from '../scripts/components/Section.js';
+import PopupWithImage from '../scripts/components/PopupWithImage.js';
+import PopupWithForm from '../scripts/components/PopupWithForm.js';
+import UserInfo from '../scripts/components/UserInfo.js';
 
 const buttonAdd = document.querySelector(".profile__button-add"); // кнопка добавления картинки
 const buttonEdit = document.querySelector('.profile__button-edit'); // кнопка редактирования профиля
