@@ -1,5 +1,5 @@
 //<link rel="stylesheet" href="./pages/index.css" />
-import '../pages/index.css';
+import './index.css';
 import Card from '../scripts/components/Card.js';
 import FormValidator from '../scripts/components/FormValidator.js';
 import { initialCards, classSettingsValid } from '../scripts/initial.js';
@@ -8,19 +8,20 @@ import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 
-const buttonAdd = document.querySelector(".profile__button-add"); // кнопка добавления картинки
-const buttonEdit = document.querySelector('.profile__button-edit'); // кнопка редактирования профиля
+
+function createCard(item) {
+    const card = new Card(item, '.element_template',
+        (link, name) => {
+            popupImg.open(link, name);
+        }
+    );
+    return card.generateCard();
+}
 
 const cardsList = new Section({
         items: initialCards,
         renderer: (item) => {
-            //// добавление карточки к галерее elements
-            const card = new Card(item, '.element_template',
-                (link, name) => {
-                    popupImg.open(link, name);
-                }
-            );
-            const cardElement = card.generateCard();
+            const cardElement = createCard(item);
             cardsList.addItem(cardElement);
         },
     },
@@ -37,17 +38,18 @@ const userInfo = new UserInfo('.profile__name', '.profile__description');
 const popupAdd = new PopupWithForm(
     '.popup_add',
     (item) => {
-        const card = new Card(item, '.element_template',
-            (link, name) => {
-                popupImg.open(link, name);
-            }
-        );
-        const cardElement = card.generateCard();
+        const cardElement = createCard(item);
         cardsList.addItem(cardElement);
     }
 );
-popupAdd._setEventListeners();
-buttonAdd.addEventListener('click', popupAdd.open.bind(popupAdd));
+popupAdd.setEventListeners();
+
+const buttonAdd = document.querySelector(".profile__button-add"); // кнопка добавления картинки
+const buttonSubmitAdd = document.querySelector('.popup_add').querySelector('.popup__button-submit');
+buttonAdd.addEventListener('click', () => {
+    popupAdd.open();
+    formAddValidator.buttonStateInactive(buttonSubmitAdd, classSettingsValid.inactiveButtonClass);
+});
 
 // попап профиля
 const popupProfile = new PopupWithForm(
@@ -56,15 +58,17 @@ const popupProfile = new PopupWithForm(
         userInfo.setUserInfo(item);
     }
 );
-popupProfile._setEventListeners();
+popupProfile.setEventListeners();
 
+const buttonEdit = document.querySelector('.profile__button-edit'); // кнопка редактирования профиля
+const buttonEditInputName = document.querySelector('.popup_profile').querySelector('.popup__input_type_name'); // поле редактирования имени
+const buttonEditInputDescription = document.querySelector('.popup_profile').querySelector('.popup__input_type_description'); // поле редактирования описания
 
 buttonEdit.addEventListener('click', (event) => {
-    popupProfile.open.bind(popupProfile)(event);
-    const usinfo = userInfo.getUserInfo.bind(userInfo)();
-    popupProfile._popup.querySelector('.popup__input_type_name').value = usinfo.name;
-    popupProfile._popup.querySelector('.popup__input_type_description').value = usinfo.description;
-
+    popupProfile.open(event);
+    const usinfo = userInfo.getUserInfo();
+    buttonEditInputName.value = usinfo.name;
+    buttonEditInputDescription.value = usinfo.description;
 });
 
 // попап показа картинок
@@ -74,8 +78,8 @@ popupImg.setEventListeners();
 
 const formElementAdd = document.querySelector('.popup_add').querySelector('.popup__form');
 const formAddValidator = new FormValidator(formElementAdd, classSettingsValid); // включение валидации формы
-const formAddValidadion = formAddValidator.enableValidation();
+formAddValidator.enableValidation();
 
 const formElementProfile = document.querySelector('.popup_profile').querySelector('.popup__form');
 const formProfileValidator = new FormValidator(formElementProfile, classSettingsValid); // включение валидации формы
-const formProfileValidadion = formProfileValidator.enableValidation();
+formProfileValidator.enableValidation();
