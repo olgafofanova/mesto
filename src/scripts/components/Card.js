@@ -4,6 +4,7 @@ export default class Card {
         this._cardSelector = cardSelector;
         this._name = item.name;
         this._link = item.link;
+        this._id = item._id;
         this._handleCardClick = handleCardClick;
     }
 

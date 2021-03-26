@@ -12,13 +12,30 @@ import Api from '../scripts/components/Api.js';
 const config = {
     url: 'https://mesto.nomoreparties.co/v1/cohort-21/cards',
     // url: 'https://mesto.nomoreparties.co/v1/cohort-21/users/me',
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-21',
     headers: {
-        'Content-Type': 'application/json',
-        'authorization': '8ea55ead-cf60-403a-aee5-af8dfdc70d5b',
+      authorization : '8ea55ead-cf60-403a-aee5-af8dfdc70d5b',
+      'Content-Type': 'application/json',
+
     },
 };
 
+
 const api = new Api(config);
+
+const userInfo = new UserInfo('.profile__name', '.profile__description','.profile__avatar');
+
+api.getUser()
+    .then(data => {
+        // console.log(data);
+        userInfo.setUserInfo(data);
+        // отрисовка карточек
+       // cardsList.renderItems(data);
+    })
+    .catch(err => {
+        console.log('Ошибка при загрузке карточек', err.message);
+    });
+
 
 function createCard(item) {
     const card = new Card(item, '.element_template',
@@ -29,47 +46,28 @@ function createCard(item) {
     return card.generateCard();
 }
 
+const cardsList = new Section({
+ // items: data, //initialCards,
+ items: {},
+  renderer: (item) => {
+      //console.log(item);
+      const cardElement = createCard(item);
+      cardsList.addItem(cardElement);
+  },
+  api,
+},
+'.elements'
+);
 
-
-api.getInfo()
+api.getCards()
     .then(data => {
-        console.log(data);
-        // const todoList = new TodoList(data, createTodoListForm, createTodoListItem, api);
-        const cardsList = new Section({
-                items: data, //initialCards,
-                // data,
-                renderer: (item) => {
-                    //console.log(item);
-                    const cardElement = createCard(item);
-                    cardsList.addItem(cardElement);
-                },
-                api,
-            },
-            '.elements'
-        );
-        //todoList.render(page);
+        // console.log(data);
         // отрисовка карточек
-        console.log(cardsList);
-        cardsList.renderItems();
+        cardsList.renderItems(data);
     })
     .catch(err => {
         console.log('Ошибка при загрузке карточек', err.message);
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // function createCard(item) {
 //     const card = new Card(item, '.element_template',
@@ -93,55 +91,60 @@ api.getInfo()
 // // отрисовка карточек
 // cardsList.renderItems();
 
-// const userInfo = new UserInfo('.profile__name', '.profile__description');
 
-// //Для каждого попапа свой экземпляр класса PopupWithForm
-// // попап добавления картинок
-// const popupAdd = new PopupWithForm(
-//     '.popup_add',
-//     (item) => {
-//         const cardElement = createCard(item);
-//         cardsList.addItem(cardElement);
-//     }
-// );
-// popupAdd.setEventListeners();
 
-// const buttonAdd = document.querySelector(".profile__button-add"); // кнопка добавления картинки
-// const buttonSubmitAdd = document.querySelector('.popup_add').querySelector('.popup__button-submit');
-// buttonAdd.addEventListener('click', () => {
-//     popupAdd.open();
-//     formAddValidator.buttonStateInactive(buttonSubmitAdd, classSettingsValid.inactiveButtonClass);
-// });
+//Для каждого попапа свой экземпляр класса PopupWithForm
+// попап добавления картинок
+const popupAdd = new PopupWithForm(
+    '.popup_add',
+    '/cards',
+    (item) => {
+        const cardElement = createCard(item);
+        cardsList.addNewItem(cardElement);
+    },
+    api
+);
+popupAdd.setEventListeners();
 
-// // попап профиля
-// const popupProfile = new PopupWithForm(
-//     '.popup_profile',
-//     (item) => {
-//         userInfo.setUserInfo(item);
-//     }
-// );
-// popupProfile.setEventListeners();
+// кнопка добавления картинки
+const buttonAdd = document.querySelector(".profile__button-add");
+const buttonSubmitAdd = document.querySelector('.popup_add').querySelector('.popup__button-submit');
+buttonAdd.addEventListener('click', () => {
+    popupAdd.open();
+    formAddValidator.buttonStateInactive(buttonSubmitAdd, classSettingsValid.inactiveButtonClass);
+});
 
-// const buttonEdit = document.querySelector('.profile__button-edit'); // кнопка редактирования профиля
-// const buttonEditInputName = document.querySelector('.popup_profile').querySelector('.popup__input_type_name'); // поле редактирования имени
-// const buttonEditInputDescription = document.querySelector('.popup_profile').querySelector('.popup__input_type_description'); // поле редактирования описания
+// попап профиля
+const popupProfile = new PopupWithForm(
+    '.popup_profile',
+    '/users/me',
+    (item) => {
+        userInfo.setUserInfo(item);
+    },
+    api
+);
+popupProfile.setEventListeners();
 
-// buttonEdit.addEventListener('click', (event) => {
-//     popupProfile.open(event);
-//     const usinfo = userInfo.getUserInfo();
-//     buttonEditInputName.value = usinfo.name;
-//     buttonEditInputDescription.value = usinfo.description;
-// });
+const buttonEdit = document.querySelector('.profile__button-edit'); // кнопка редактирования профиля
+const buttonEditInputName = document.querySelector('.popup_profile').querySelector('.popup__input_type_name'); // поле редактирования имени
+const buttonEditInputDescription = document.querySelector('.popup_profile').querySelector('.popup__input_type_description'); // поле редактирования описания
 
-// // попап показа картинок
-// const popupImg = new PopupWithImage({},
-//     '.popup_type_image');
-// popupImg.setEventListeners();
+buttonEdit.addEventListener('click', (event) => {
+    popupProfile.open(event);
+    const usinfo = userInfo.getUserInfo();
+    buttonEditInputName.value = usinfo.name;
+    buttonEditInputDescription.value = usinfo.about;
+});
 
-// const formElementAdd = document.querySelector('.popup_add').querySelector('.popup__form');
-// const formAddValidator = new FormValidator(formElementAdd, classSettingsValid); // включение валидации формы
-// formAddValidator.enableValidation();
+// попап показа картинок
+const popupImg = new PopupWithImage({},
+    '.popup_type_image');
+popupImg.setEventListeners();
 
-// const formElementProfile = document.querySelector('.popup_profile').querySelector('.popup__form');
-// const formProfileValidator = new FormValidator(formElementProfile, classSettingsValid); // включение валидации формы
-// formProfileValidator.enableValidation();
+const formElementAdd = document.querySelector('.popup_add').querySelector('.popup__form');
+const formAddValidator = new FormValidator(formElementAdd, classSettingsValid); // включение валидации формы
+formAddValidator.enableValidation();
+
+const formElementProfile = document.querySelector('.popup_profile').querySelector('.popup__form');
+const formProfileValidator = new FormValidator(formElementProfile, classSettingsValid); // включение валидации формы
+formProfileValidator.enableValidation();
