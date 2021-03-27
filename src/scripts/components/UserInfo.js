@@ -13,12 +13,16 @@ export default class UserInfo {
         return { name: this._nameSelector.textContent, about: this._descriptionSelector.textContent }
     }
 
+    getUserId() {
+        return this.id;
+    }
+
     //принимает новые данные пользователя и добавляет их на страницу
     setUserInfo(data) {
         this._nameSelector.textContent = data.name;
         this._descriptionSelector.textContent = data.about;
-        this._id = data._id;
-        this._avatarSelector.src=data.avatar;
+        this.id = data._id;
+        this._avatarSelector.src = data.avatar;
 
     }
 }

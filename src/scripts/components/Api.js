@@ -12,7 +12,7 @@ export default class Api {
     }
 
     getInitialCards() {
-      // ...
+        // ...
     }
 
 
@@ -25,38 +25,31 @@ export default class Api {
     // }
 
 
-    postInfo(url, data) {
-          console.log(data);
+    postInfo(url, method, data) {
+        console.log(data);
         return fetch(`${this.baseUrl}${url}`, {
-                method: 'POST',
+                method: method,
                 headers: this.headers,
                 body: JSON.stringify(
-                  data
-              ),
+                    data
+                ),
             })
             .then(res => this._parseResponse(res))
             .catch(err => Promise.reject(err));
     }
 
-    getUser() {
-     // this.getInfo(`${this.baseUrl}/users/me`);
-     return fetch(`${this.baseUrl}/users/me`, {
-      headers: this.headers,
-  })
-  .then(res => this._parseResponse(res))
-  .catch(err => Promise.reject(err));
-    }
+
 
     getCards() {
-     // this.getInfo(`${this.baseUrl}/cards`);
-      return fetch(`${this.baseUrl}/cards`, {
-              headers: this.headers,
-          })
-          .then(res => this._parseResponse(res))
-          .catch(err => Promise.reject(err));
+        // this.getInfo(`${this.baseUrl}/cards`);
+        return fetch(`${this.baseUrl}/cards`, {
+                headers: this.headers,
+            })
+            .then(res => this._parseResponse(res))
+            .catch(err => Promise.reject(err));
     }
 
-    createCard({ name, link}) {
+    createCard({ name, link }) {
         return fetch(`${this.baseUrl}/cards`, {
                 method: 'POST',
                 headers: this.headers,
@@ -69,19 +62,26 @@ export default class Api {
             .catch(msg => Promise.reject(new Error(msg)));
     }
 
+    getUser() {
+        return fetch(`${this.baseUrl}/users/me`, {
+                headers: this.headers,
+            })
+            .then(res => this._parseResponse(res))
+            .catch(err => Promise.reject(err));
+    }
 
-    editUser({ name, about}) {
-      return fetch(`${this.baseUrl}/users/me`, {
-              method: 'POST',
-              headers: this.headers,
-              body: JSON.stringify({
-                  name,
-                  about
-              }),
-          })
-          .then(res => this._parseResponse(res))
-          .catch(msg => Promise.reject(new Error(msg)));
-  }
+    editUser({ name, about }) {
+        return fetch(`${this.baseUrl}/users/me`, {
+                method: 'POST',
+                headers: this.headers,
+                body: JSON.stringify({
+                    name,
+                    about
+                }),
+            })
+            .then(res => this._parseResponse(res))
+            .catch(msg => Promise.reject(new Error(msg)));
+    }
 
     // deleteTask(id) {
     //     return fetch(`${this.url}/${id}`, {
@@ -91,4 +91,25 @@ export default class Api {
     //         .then(res => this._parseResponse(res))
     //         .catch(msg => Promise.reject(new Error(msg)));
     // }
+
+    likeCard({ _id }) {
+        console.log(_id);
+        return fetch(`${this.baseUrl}/cards/likes/${_id}`, {
+                method: 'PUT',
+                headers: this.headers
+            })
+            .then(res => this._parseResponse(res))
+            .catch(msg => Promise.reject(new Error(msg)));
+    }
+
+    likeCardDelete({ _id }) {
+        console.log(_id);
+        return fetch(`${this.baseUrl}/cards/likes/${_id}`, {
+                method: 'DELETE',
+                headers: this.headers
+            })
+            .then(res => this._parseResponse(res))
+            .catch(msg => Promise.reject(new Error(msg)));
+    }
+
 }

@@ -1,12 +1,13 @@
 import Popup from './Popup.js';
 export default class PopupWithForm extends Popup {
-    constructor(popupSelector, url, handleFormSubmit, api) {
+    constructor(popupSelector, url, method, handleFormSubmit, api) {
         super(popupSelector, api);
         this._handleFormSubmit = handleFormSubmit;
         this._popupForm = this._popup.querySelector('.popup__form');
         this._inputList = this._popup.querySelectorAll('.popup__input');
         this._api = api;
         this._url = url;
+        this._method = method;
     }
 
     //при закрытии попапа форма должна сбрасываться
@@ -21,9 +22,9 @@ export default class PopupWithForm extends Popup {
         this._popup.addEventListener('submit', (evt) => {
             evt.preventDefault();
             console.log(this._url);
-           // debugger;
-console.log(this._getInputValues());
-console.log(this._getInputValues());
+            // debugger;
+            console.log(this._getInputValues());
+
             // this._api.createCard(this._getInputValues())
             //   .then(res => {
             //    // this._addItem(res);
@@ -35,16 +36,16 @@ console.log(this._getInputValues());
             //     console.log('Ошибка при создании карточки', err);
             //   });
 
-            this._api.postInfo(this._url,this._getInputValues())
-            .then(res => {
-             // this._addItem(res);
-             this._handleFormSubmit(res);
-             console.log(res);
-             console.log(this._handleFormSubmit);
-            })
-            .catch(err => {
-              console.log('Ошибка при создании карточки', err);
-            });
+            this._api.postInfo(this._url, this._method, this._getInputValues())
+                .then(res => {
+                    // this._addItem(res);
+                    this._handleFormSubmit(res);
+                    console.log(res);
+                    console.log(this._handleFormSubmit);
+                })
+                .catch(err => {
+                    console.log('Ошибка при создании карточки', err);
+                });
 
             this.close();
         })

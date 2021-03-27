@@ -14,8 +14,8 @@ const config = {
     // url: 'https://mesto.nomoreparties.co/v1/cohort-21/users/me',
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-21',
     headers: {
-      authorization : '8ea55ead-cf60-403a-aee5-af8dfdc70d5b',
-      'Content-Type': 'application/json',
+        authorization: '8ea55ead-cf60-403a-aee5-af8dfdc70d5b',
+        'Content-Type': 'application/json',
 
     },
 };
@@ -23,14 +23,16 @@ const config = {
 
 const api = new Api(config);
 
-const userInfo = new UserInfo('.profile__name', '.profile__description','.profile__avatar');
+const userInfo = new UserInfo('.profile__name', '.profile__description', '.profile__avatar');
+let myId;
 
 api.getUser()
     .then(data => {
         // console.log(data);
         userInfo.setUserInfo(data);
+        myId = userInfo.getUserId();
         // отрисовка карточек
-       // cardsList.renderItems(data);
+        // cardsList.renderItems(data);
     })
     .catch(err => {
         console.log('Ошибка при загрузке карточек', err.message);
@@ -38,7 +40,7 @@ api.getUser()
 
 
 function createCard(item) {
-    const card = new Card(item, '.element_template',
+    const card = new Card(item, '.element_template', api, myId,
         (link, name) => {
             popupImg.open(link, name);
         }
@@ -47,16 +49,16 @@ function createCard(item) {
 }
 
 const cardsList = new Section({
- // items: data, //initialCards,
- items: {},
-  renderer: (item) => {
-      //console.log(item);
-      const cardElement = createCard(item);
-      cardsList.addItem(cardElement);
-  },
-  api,
-},
-'.elements'
+        // items: data, //initialCards,
+        items: {},
+        renderer: (item) => {
+            //console.log(item);
+            const cardElement = createCard(item);
+            cardsList.addItem(cardElement);
+        },
+        api,
+    },
+    '.elements'
 );
 
 api.getCards()
@@ -69,35 +71,14 @@ api.getCards()
         console.log('Ошибка при загрузке карточек', err.message);
     });
 
-// function createCard(item) {
-//     const card = new Card(item, '.element_template',
-//         (link, name) => {
-//             popupImg.open(link, name);
-//         }
-//     );
-//     return card.generateCard();
-// }
-
-// const cardsList = new Section({
-//         items: initialCards,
-//         renderer: (item) => {
-//             const cardElement = createCard(item);
-//             cardsList.addItem(cardElement);
-//         },
-//     },
-//     '.elements'
-// );
-
-// // отрисовка карточек
-// cardsList.renderItems();
-
-
 
 //Для каждого попапа свой экземпляр класса PopupWithForm
+
 // попап добавления картинок
 const popupAdd = new PopupWithForm(
     '.popup_add',
     '/cards',
+    'POST',
     (item) => {
         const cardElement = createCard(item);
         cardsList.addNewItem(cardElement);
@@ -118,6 +99,7 @@ buttonAdd.addEventListener('click', () => {
 const popupProfile = new PopupWithForm(
     '.popup_profile',
     '/users/me',
+    'PATCH',
     (item) => {
         userInfo.setUserInfo(item);
     },
@@ -135,7 +117,25 @@ buttonEdit.addEventListener('click', (event) => {
     buttonEditInputName.value = usinfo.name;
     buttonEditInputDescription.value = usinfo.about;
 });
+//-----------------------------
+// попап удаления карточки
+const popupDelete = new PopupWithForm(
+    '.popup_delete',
+    '/cards',
+    'POST',
+    (_id) => {
+        popupDelete.open(_id);
+    },
+    api
+);
+popupDelete.setEventListeners();
 
+// const buttonSubmitAdd = document.querySelector('.popup_add').querySelector('.popup__button-submit');
+// buttonAdd.addEventListener('click', () => {
+//   popupAdd.open();
+// });
+
+//-----------------------------
 // попап показа картинок
 const popupImg = new PopupWithImage({},
     '.popup_type_image');

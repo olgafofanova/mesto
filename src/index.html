@@ -81,7 +81,20 @@
                         <input type="submit" value="Создать" class="popup__button-submit">
                     </fieldset>
                     <button class="popup__button-close button" type="button">
-          </button>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <section class="popup popup_type_profile-add popup_delete">
+            <div class="popup__container">
+                <h2 class="popup__header">Вы уверены?</h2>
+                <form class="popup__form" name="popup-form-delete" novalidate>
+                    <fieldset class="popup__fieldset">
+                        <input type="submit" value="Да" class="popup__button-submit">
+                    </fieldset>
+                    <button class="popup__button-close button" type="button">
+                    </button>
                 </form>
             </div>
         </section>
@@ -91,7 +104,7 @@
                 <form name="popupImage-form" novalidate>
                     <img class="popup__img" src="<%=require('./images/no_image.png')%>" alt="Изображение" />
                     <button class="popup__button-close button" type="button">
-          </button>
+                    </button>
                 </form>
                 <h2 class="popup__header-img">Наименование</h2>
             </div>
@@ -106,6 +119,7 @@
       <div class="element__info">
         <h2 class="element__description block"></h2>
         <button class="element__button-like button" type="button">
+          <p class="element__likeCount"></p>
         </button>
       </div>
     </article>
