@@ -15,16 +15,6 @@ export default class Api {
         // ...
     }
 
-
-    // getInfo() {
-    //     return fetch(this.url, {
-    //             headers: this.headers,
-    //         })
-    //         .then(res => this._parseResponse(res))
-    //         .catch(err => Promise.reject(err));
-    // }
-
-
     postInfo(url, method, data) {
         console.log(data);
         return fetch(`${this.baseUrl}${url}`, {
@@ -36,30 +26,6 @@ export default class Api {
             })
             .then(res => this._parseResponse(res))
             .catch(err => Promise.reject(err));
-    }
-
-
-
-    getCards() {
-        // this.getInfo(`${this.baseUrl}/cards`);
-        return fetch(`${this.baseUrl}/cards`, {
-                headers: this.headers,
-            })
-            .then(res => this._parseResponse(res))
-            .catch(err => Promise.reject(err));
-    }
-
-    createCard({ name, link }) {
-        return fetch(`${this.baseUrl}/cards`, {
-                method: 'POST',
-                headers: this.headers,
-                body: JSON.stringify({
-                    name,
-                    link
-                }),
-            })
-            .then(res => this._parseResponse(res))
-            .catch(msg => Promise.reject(new Error(msg)));
     }
 
     getUser() {
@@ -83,14 +49,36 @@ export default class Api {
             .catch(msg => Promise.reject(new Error(msg)));
     }
 
-    // deleteTask(id) {
-    //     return fetch(`${this.url}/${id}`, {
-    //             method: 'DELETE',
-    //             headers: this.headers,
-    //         })
-    //         .then(res => this._parseResponse(res))
-    //         .catch(msg => Promise.reject(new Error(msg)));
-    // }
+    getCards() {
+        // this.getInfo(`${this.baseUrl}/cards`);
+        return fetch(`${this.baseUrl}/cards`, {
+                headers: this.headers,
+            })
+            .then(res => this._parseResponse(res))
+            .catch(err => Promise.reject(err));
+    }
+
+    createCard({ name, link }) {
+        return fetch(`${this.baseUrl}/cards`, {
+                method: 'POST',
+                headers: this.headers,
+                body: JSON.stringify({
+                    name,
+                    link
+                }),
+            })
+            .then(res => this._parseResponse(res))
+            .catch(msg => Promise.reject(new Error(msg)));
+    }
+
+    deleteCard({ _id }) {
+        return fetch(`${this.baseUrl}/cards/${_id}`, {
+                method: 'DELETE',
+                headers: this.headers,
+            })
+            .then(res => this._parseResponse(res))
+            .catch(msg => Promise.reject(new Error(msg)));
+    }
 
     likeCard({ _id }) {
         console.log(_id);

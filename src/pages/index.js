@@ -6,6 +6,7 @@ import { initialCards, classSettingsValid } from '../scripts/initial.js';
 import Section from '../scripts/components/Section.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
+import PopupWithConfirm from '../scripts/components/PopupWithConfirm.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 import Api from '../scripts/components/Api.js';
 
@@ -43,6 +44,9 @@ function createCard(item) {
     const card = new Card(item, '.element_template', api, myId,
         (link, name) => {
             popupImg.open(link, name);
+        },
+        (id, element) => {
+            popupDelete.open(id, element);
         }
     );
     return card.generateCard();
@@ -72,7 +76,7 @@ api.getCards()
     });
 
 
-//Для каждого попапа свой экземпляр класса PopupWithForm
+//Для каждого попапа свой экземпляр класса Popup
 
 // попап добавления картинок
 const popupAdd = new PopupWithForm(
@@ -88,6 +92,10 @@ const popupAdd = new PopupWithForm(
 popupAdd.setEventListeners();
 
 // кнопка добавления картинки
+const formElementAdd = document.querySelector('.popup_add').querySelector('.popup__form');
+const formAddValidator = new FormValidator(formElementAdd, classSettingsValid); // включение валидации формы
+formAddValidator.enableValidation();
+
 const buttonAdd = document.querySelector(".profile__button-add");
 const buttonSubmitAdd = document.querySelector('.popup_add').querySelector('.popup__button-submit');
 buttonAdd.addEventListener('click', () => {
@@ -117,12 +125,34 @@ buttonEdit.addEventListener('click', (event) => {
     buttonEditInputName.value = usinfo.name;
     buttonEditInputDescription.value = usinfo.about;
 });
+//---------------------------
+// попап редактирования аватара
+const popupEditAvatar = new PopupWithForm(
+    '.popup_avatar',
+    '/users/me/avatar',
+    'PATCH',
+    (item) => {
+        userInfo.setUserInfo(item);
+    },
+    api
+);
+popupEditAvatar.setEventListeners();
+
+const iconAvatarEdit = document.querySelector('.profile__avatar'); // кнопка редактирования профиля
+
+iconAvatarEdit.addEventListener('click', (event) => {
+    popupEditAvatar.open(event);
+    // const usinfo = userInfo.getUserInfo();
+    // buttonEditInputName.value = usinfo.name;
+    // buttonEditInputDescription.value = usinfo.about;
+});
 //-----------------------------
 // попап удаления карточки
-const popupDelete = new PopupWithForm(
+const popupDelete = new PopupWithConfirm(
     '.popup_delete',
     '/cards',
-    'POST',
+    'DELETE',
+    //функция удаления карточки
     (_id) => {
         popupDelete.open(_id);
     },
@@ -141,9 +171,7 @@ const popupImg = new PopupWithImage({},
     '.popup_type_image');
 popupImg.setEventListeners();
 
-const formElementAdd = document.querySelector('.popup_add').querySelector('.popup__form');
-const formAddValidator = new FormValidator(formElementAdd, classSettingsValid); // включение валидации формы
-formAddValidator.enableValidation();
+
 
 const formElementProfile = document.querySelector('.popup_profile').querySelector('.popup__form');
 const formProfileValidator = new FormValidator(formElementProfile, classSettingsValid); // включение валидации формы

@@ -1,5 +1,5 @@
 export default class Card {
-    constructor(item, cardSelector, api, myId, handleCardClick) {
+    constructor(item, cardSelector, api, myId, handleCardClick, handleCardDelete) {
         //handleCardClick должна открывать попап с картинкой при клике на карточку.
         this._cardSelector = cardSelector;
         this._name = item.name;
@@ -15,6 +15,8 @@ export default class Card {
 
 
         this._handleCardClick = handleCardClick;
+        this._handleCardDelete = handleCardDelete;
+
         this._api = api;
     }
 
@@ -60,6 +62,18 @@ export default class Card {
     _deleteElement(evt) {
         this._element.remove();
         this._element = null;
+
+        // this._api.deleteCard({ _id: this._id })
+        //     .then(data => {
+        //         this._element.remove();
+        //         this._element = null;
+        //     })
+        //     .catch(err => {
+        //         console.log('Ошибка удаления', err.message);
+        //     });
+
+
+
         evt.stopPropagation();
     }
 
@@ -69,8 +83,8 @@ export default class Card {
         });
         this._element.querySelector('.element__button-delete').addEventListener('click', (event) => {
 
-            this._deleteElement(event);
-
+            // this._deleteElement(event);
+            this._handleCardDelete(this._id, this._element);
         });
 
         this._element.querySelector('.element__img').addEventListener('click', (event) => {
@@ -88,7 +102,6 @@ export default class Card {
             this._element.querySelector('.element__button-like').classList.add('element__button-like_active');
         };
 
-        console.log(this._owner, this.myId)
         if (!(this._owner === this.myId)) {
             this._element.querySelector('.element__button-delete').classList.add('element__button-delete_none');
         };
