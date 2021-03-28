@@ -11,12 +11,7 @@ export default class Api {
         return Promise.reject(new Error(`Произошла ошибка со статус-кодом ${res.status}`));
     }
 
-    getInitialCards() {
-        // ...
-    }
-
     postInfo(url, method, data) {
-        console.log(data);
         return fetch(`${this.baseUrl}${url}`, {
                 method: method,
                 headers: this.headers,
@@ -50,7 +45,6 @@ export default class Api {
     }
 
     getCards() {
-        // this.getInfo(`${this.baseUrl}/cards`);
         return fetch(`${this.baseUrl}/cards`, {
                 headers: this.headers,
             })
@@ -81,7 +75,6 @@ export default class Api {
     }
 
     likeCard({ _id }) {
-        console.log(_id);
         return fetch(`${this.baseUrl}/cards/likes/${_id}`, {
                 method: 'PUT',
                 headers: this.headers
@@ -91,7 +84,6 @@ export default class Api {
     }
 
     likeCardDelete({ _id }) {
-        console.log(_id);
         return fetch(`${this.baseUrl}/cards/likes/${_id}`, {
                 method: 'DELETE',
                 headers: this.headers

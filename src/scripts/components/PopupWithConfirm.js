@@ -15,7 +15,6 @@ export default class PopupWithConfirm extends Popup {
         this._idCard = id;
         this._elementCard = element;
         console.log(this._idCard);
-        // this._popupForm.reset();
     }
 
     setEventListeners() {
@@ -24,12 +23,8 @@ export default class PopupWithConfirm extends Popup {
         //добавение обработчика сабмита формы
         this._popup.addEventListener('submit', (evt) => {
             evt.preventDefault();
-            console.log(this._idCard);
             this._api.deleteCard({ _id: this._idCard })
                 .then(res => {
-                    // this._addItem(res);
-                    //this._handleFormSubmit(res);
-                    console.log(res);
                     this._elementCard.remove();
                     this._elementCard = null;
                 })

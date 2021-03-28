@@ -11,8 +11,6 @@ import UserInfo from '../scripts/components/UserInfo.js';
 import Api from '../scripts/components/Api.js';
 
 const config = {
-    url: 'https://mesto.nomoreparties.co/v1/cohort-21/cards',
-    // url: 'https://mesto.nomoreparties.co/v1/cohort-21/users/me',
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-21',
     headers: {
         authorization: '8ea55ead-cf60-403a-aee5-af8dfdc70d5b',
@@ -29,11 +27,8 @@ let myId;
 
 api.getUser()
     .then(data => {
-        // console.log(data);
         userInfo.setUserInfo(data);
         myId = userInfo.getUserId();
-        // отрисовка карточек
-        // cardsList.renderItems(data);
     })
     .catch(err => {
         console.log('Ошибка при загрузке карточек', err.message);
@@ -53,10 +48,8 @@ function createCard(item) {
 }
 
 const cardsList = new Section({
-        // items: data, //initialCards,
         items: {},
         renderer: (item) => {
-            //console.log(item);
             const cardElement = createCard(item);
             cardsList.addItem(cardElement);
         },
@@ -67,16 +60,12 @@ const cardsList = new Section({
 
 api.getCards()
     .then(data => {
-        // console.log(data);
         // отрисовка карточек
         cardsList.renderItems(data);
     })
     .catch(err => {
         console.log('Ошибка при загрузке карточек', err.message);
     });
-
-
-//Для каждого попапа свой экземпляр класса Popup
 
 // попап добавления картинок
 const popupAdd = new PopupWithForm(
@@ -146,6 +135,8 @@ iconAvatarEdit.addEventListener('click', (event) => {
     // buttonEditInputName.value = usinfo.name;
     // buttonEditInputDescription.value = usinfo.about;
 });
+
+
 //-----------------------------
 // попап удаления карточки
 const popupDelete = new PopupWithConfirm(
@@ -160,19 +151,16 @@ const popupDelete = new PopupWithConfirm(
 );
 popupDelete.setEventListeners();
 
-// const buttonSubmitAdd = document.querySelector('.popup_add').querySelector('.popup__button-submit');
-// buttonAdd.addEventListener('click', () => {
-//   popupAdd.open();
-// });
-
 //-----------------------------
 // попап показа картинок
 const popupImg = new PopupWithImage({},
     '.popup_type_image');
 popupImg.setEventListeners();
 
-
-
 const formElementProfile = document.querySelector('.popup_profile').querySelector('.popup__form');
 const formProfileValidator = new FormValidator(formElementProfile, classSettingsValid); // включение валидации формы
 formProfileValidator.enableValidation();
+
+const formElementProfileAvatar = document.querySelector('.popup_avatar').querySelector('.popup__form');
+const formProfileAvatarValidator = new FormValidator(formElementProfileAvatar, classSettingsValid); // включение валидации формы
+formProfileAvatarValidator.enableValidation();

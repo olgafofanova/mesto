@@ -1,5 +1,5 @@
 .profile__avatar {
-    object-fit: contain;
+    object-fit: cover;
     background-size: contain;
     background-position: center;
     width: 120px;
@@ -7,10 +7,33 @@
     display: block;
     box-sizing: border-box;
     border-radius: 60px;
+    transition: opacity linear .6s;
 }
 
 @media screen and (max-width: 768px) {
     .profile__avatar {
         margin: 0 auto;
     }
+}
+
+
+/* .profile__avatar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: red;
+    opacity: 0.9;
+    transition: opacity linear .6s;
+} */
+
+
+/* .profile__avatar:hover::before {
+    opacity: 0.3;
+} */
+
+.profile__avatar:hover {
+    opacity: 0.3;
 }

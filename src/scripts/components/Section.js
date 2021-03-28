@@ -7,12 +7,9 @@ export default class Section { // отвечает за отрисовку эл�
     }
 
     renderItems(items) {
-        // console.log(this._renderedItems);
-      //  this._renderedItems.forEach(item =>
-      this._renderedItems=items;
-          this._renderedItems.forEach(item =>
+        this._renderedItems = items;
+        this._renderedItems.forEach(item =>
             this._renderer(item)
-            // console.log(item)
         )
     }
 
@@ -21,6 +18,6 @@ export default class Section { // отвечает за отрисовку эл�
     }
 
     addItem(element) {
-      this._container.append(element);
-  }
+        this._container.append(element);
+    }
 }
