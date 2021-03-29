@@ -19,50 +19,21 @@ export default class Api {
                     data
                 ),
             })
-            .then(res => this._parseResponse(res))
-            .catch(err => Promise.reject(err));
+            .then(res => this._parseResponse(res));
     }
 
     getUser() {
         return fetch(`${this.baseUrl}/users/me`, {
                 headers: this.headers,
             })
-            .then(res => this._parseResponse(res))
-            .catch(err => Promise.reject(err));
-    }
-
-    editUser({ name, about }) {
-        return fetch(`${this.baseUrl}/users/me`, {
-                method: 'POST',
-                headers: this.headers,
-                body: JSON.stringify({
-                    name,
-                    about
-                }),
-            })
-            .then(res => this._parseResponse(res))
-            .catch(msg => Promise.reject(new Error(msg)));
+            .then(res => this._parseResponse(res));
     }
 
     getCards() {
         return fetch(`${this.baseUrl}/cards`, {
                 headers: this.headers,
             })
-            .then(res => this._parseResponse(res))
-            .catch(err => Promise.reject(err));
-    }
-
-    createCard({ name, link }) {
-        return fetch(`${this.baseUrl}/cards`, {
-                method: 'POST',
-                headers: this.headers,
-                body: JSON.stringify({
-                    name,
-                    link
-                }),
-            })
-            .then(res => this._parseResponse(res))
-            .catch(msg => Promise.reject(new Error(msg)));
+            .then(res => this._parseResponse(res));
     }
 
     deleteCard({ _id }) {
@@ -70,8 +41,7 @@ export default class Api {
                 method: 'DELETE',
                 headers: this.headers,
             })
-            .then(res => this._parseResponse(res))
-            .catch(msg => Promise.reject(new Error(msg)));
+            .then(res => this._parseResponse(res));
     }
 
     likeCard({ _id }) {
@@ -79,8 +49,7 @@ export default class Api {
                 method: 'PUT',
                 headers: this.headers
             })
-            .then(res => this._parseResponse(res))
-            .catch(msg => Promise.reject(new Error(msg)));
+            .then(res => this._parseResponse(res));
     }
 
     likeCardDelete({ _id }) {
@@ -88,8 +57,7 @@ export default class Api {
                 method: 'DELETE',
                 headers: this.headers
             })
-            .then(res => this._parseResponse(res))
-            .catch(msg => Promise.reject(new Error(msg)));
+            .then(res => this._parseResponse(res));
     }
 
 }

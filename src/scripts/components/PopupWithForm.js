@@ -29,6 +29,7 @@ export default class PopupWithForm extends Popup {
         this._popup.addEventListener('submit', (evt) => {
             evt.preventDefault();
             this._popupFormButton.value = 'Сохранение...';
+            // не поняла как можно вызвать отдельные методы
             this._api.postInfo(this._url, this._method, this._getInputValues())
                 .then(res => {
                     this._handleFormSubmit(res);

@@ -25,16 +25,6 @@ const api = new Api(config);
 const userInfo = new UserInfo('.profile__name', '.profile__description', '.profile__avatar');
 let myId;
 
-api.getUser()
-    .then(data => {
-        userInfo.setUserInfo(data);
-        myId = userInfo.getUserId();
-    })
-    .catch(err => {
-        console.log('Ошибка при загрузке карточек', err.message);
-    });
-
-
 function createCard(item) {
     const card = new Card(item, '.element_template', api, myId,
         (link, name) => {
@@ -58,13 +48,15 @@ const cardsList = new Section({
     '.elements'
 );
 
-api.getCards()
-    .then(data => {
-        // отрисовка карточек
-        cardsList.renderItems(data);
+
+Promise.all([api.getUser(), api.getCards()])
+    .then((data) => {
+        userInfo.setUserInfo(data[0]);
+        myId = userInfo.getUserId();
+        cardsList.renderItems(data[1]);
     })
     .catch(err => {
-        console.log('Ошибка при загрузке карточек', err.message);
+        console.log('Ошибка при получении данных', err.message);
     });
 
 // попап добавления картинок
@@ -72,6 +64,7 @@ const popupAdd = new PopupWithForm(
     '.popup_add',
     '/cards',
     'POST',
+    // не поняла как можно вызвать отдельные методы
     (item) => {
         const cardElement = createCard(item);
         cardsList.addNewItem(cardElement);
@@ -86,10 +79,8 @@ const formAddValidator = new FormValidator(formElementAdd, classSettingsValid); 
 formAddValidator.enableValidation();
 
 const buttonAdd = document.querySelector(".profile__button-add");
-//const buttonSubmitAdd = document.querySelector('.popup_add').querySelector('.popup__button-submit');
 buttonAdd.addEventListener('click', () => {
     popupAdd.open();
-   // formAddValidator.buttonStateInactive(buttonSubmitAdd, classSettingsValid.inactiveButtonClass);
     formAddValidator.buttonStateInactive(classSettingsValid.inactiveButtonClass);
 });
 
@@ -132,9 +123,6 @@ const iconAvatarEdit = document.querySelector('.profile__avatar'); // кнопк
 
 iconAvatarEdit.addEventListener('click', (event) => {
     popupEditAvatar.open(event);
-    // const usinfo = userInfo.getUserInfo();
-    // buttonEditInputName.value = usinfo.name;
-    // buttonEditInputDescription.value = usinfo.about;
 });
 
 
@@ -164,4 +152,4 @@ formProfileValidator.enableValidation();
 
 const formElementProfileAvatar = document.querySelector('.popup_avatar').querySelector('.popup__form'); // форма смены аватара
 const formProfileAvatarValidator = new FormValidator(formElementProfileAvatar, classSettingsValid); // создание класса валидации формы
-formProfileAvatarValidator.enableValidation();  // включение валидации формы
+formProfileAvatarValidator.enableValidation(); // включение валидации формы
