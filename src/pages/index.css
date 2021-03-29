@@ -24,6 +24,7 @@
 @import "../blocks/element/__button-like/element__button-like_active.css";
 @import "../blocks/element/__button-delete/element__button-delete.css";
 @import "../blocks/element/__button-delete/_none/element__button-delete_none.css";
+@import "../blocks/element/__likeCount/element__likeCount.css";
 @import "../blocks/block/block.css";
 @import "../blocks/popup/popup.css";
 @import "../blocks/popup/_type_image/popup_type_image.css";

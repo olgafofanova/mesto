@@ -9,8 +9,8 @@ export default class Card {
         this._owner = item.owner._id;
         this.myId = myId;
         this._like = item.likes.some(function(like) {
-            return like._id === '9bfbb1e5da634a9275194044';
-        });
+          return like._id === myId;
+      });
         this._handleCardClick = handleCardClick;
         this._handleCardDelete = handleCardDelete;
         this._api = api;

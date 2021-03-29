@@ -7,52 +7,38 @@ export default class FormValidator {
         this._inputErrorClass = SettingsValid.inputErrorClass;
         this._errorClass = SettingsValid.errorClass;
         this._formElement = formElement;
+        this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));  // перечень инпутов формы
+        this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);  // кнопка сабмита
     }
 
     _setEventListeners() {
-        const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-        const buttonElement = this._formElement.querySelector(this._submitButtonSelector);
-        this._toggleButtonState(inputList, buttonElement);
-        inputList.forEach((inputElement) => {
+        this._toggleButtonState();
+        this._inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
                 this._checkInputValidity(inputElement);
-                this._toggleButtonState(inputList, buttonElement);
+                this._toggleButtonState();
             });
         });
     }
 
-    _toggleButtonState(inputList, buttonElement) {
-        if (this._hasInvalidInput(inputList)) {
-            this.buttonStateInactive(buttonElement, this._inactiveButtonClass);
+    _toggleButtonState() {
+        if (this._hasInvalidInput()) {
+            this.buttonStateInactive(this._inactiveButtonClass);
         } else {
-            buttonElement.classList.remove(this._inactiveButtonClass);
-            buttonElement.removeAttribute('disabled');
+          this._buttonElement.classList.remove(this._inactiveButtonClass);
+          this._buttonElement.removeAttribute('disabled');
         }
     };
 
-    _hasInvalidInput(inputList) {
-        return inputList.some((inputElement) => {
+    _hasInvalidInput() {
+        return this._inputList.some((inputElement) => {
             return !inputElement.validity.valid;
         })
     };
 
-    buttonStateInactive(buttonElement, inactiveButtonClass) {
-        buttonElement.classList.add(inactiveButtonClass);
-        buttonElement.setAttribute('disabled', true);
-    };
-
-    _showInputError(inputElement, errorMessage) {
-        const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
-        inputElement.classList.add(this._inputErrorClass);
-        errorElement.textContent = errorMessage;
-        errorElement.classList.add(this._errorClass);
-    };
-
-    _hideInputError(inputElement) {
-        const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
-        inputElement.classList.remove(this._inputErrorClass);
-        errorElement.classList.remove(this._errorClass);
-        errorElement.textContent = '';
+    buttonStateInactive(inactiveButtonClass) {
+      this._buttonElement.classList.add(inactiveButtonClass);
+      this._buttonElement.setAttribute('disabled', true);
     };
 
     _checkInputValidity(inputElement) {
@@ -63,10 +49,32 @@ export default class FormValidator {
         }
     };
 
+    _showInputError(inputElement, errorMessage) {
+      const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
+      inputElement.classList.add(this._inputErrorClass);
+      errorElement.textContent = errorMessage;
+      errorElement.classList.add(this._errorClass);
+  };
+
+  _hideInputError(inputElement) {
+      const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
+      inputElement.classList.remove(this._inputErrorClass);
+      errorElement.classList.remove(this._errorClass);
+      errorElement.textContent = '';
+  };
+
     enableValidation() {
         this._formElement.addEventListener('submit', (event) => {
             event.preventDefault();
         });
+
+        this._formElement.addEventListener('reset', () => {
+          this._inputList.forEach((inputElement) => {
+              this._hideInputError(inputElement)
+              this._toggleButtonState();
+          })
+      });
+
         this._setEventListeners();
     }
 }

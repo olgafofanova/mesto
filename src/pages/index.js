@@ -86,10 +86,11 @@ const formAddValidator = new FormValidator(formElementAdd, classSettingsValid); 
 formAddValidator.enableValidation();
 
 const buttonAdd = document.querySelector(".profile__button-add");
-const buttonSubmitAdd = document.querySelector('.popup_add').querySelector('.popup__button-submit');
+//const buttonSubmitAdd = document.querySelector('.popup_add').querySelector('.popup__button-submit');
 buttonAdd.addEventListener('click', () => {
     popupAdd.open();
-    formAddValidator.buttonStateInactive(buttonSubmitAdd, classSettingsValid.inactiveButtonClass);
+   // formAddValidator.buttonStateInactive(buttonSubmitAdd, classSettingsValid.inactiveButtonClass);
+    formAddValidator.buttonStateInactive(classSettingsValid.inactiveButtonClass);
 });
 
 // попап профиля
@@ -161,6 +162,6 @@ const formElementProfile = document.querySelector('.popup_profile').querySelecto
 const formProfileValidator = new FormValidator(formElementProfile, classSettingsValid); // включение валидации формы
 formProfileValidator.enableValidation();
 
-const formElementProfileAvatar = document.querySelector('.popup_avatar').querySelector('.popup__form');
-const formProfileAvatarValidator = new FormValidator(formElementProfileAvatar, classSettingsValid); // включение валидации формы
-formProfileAvatarValidator.enableValidation();
+const formElementProfileAvatar = document.querySelector('.popup_avatar').querySelector('.popup__form'); // форма смены аватара
+const formProfileAvatarValidator = new FormValidator(formElementProfileAvatar, classSettingsValid); // создание класса валидации формы
+formProfileAvatarValidator.enableValidation();  // включение валидации формы
