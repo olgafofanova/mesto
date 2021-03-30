@@ -13,6 +13,7 @@ export default class UserInfo {
         return { name: this._nameSelector.textContent, about: this._descriptionSelector.textContent }
     }
 
+    //эта функция уже не нужна
     getUserId() {
         return this.id;
     }
